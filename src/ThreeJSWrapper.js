@@ -1,8 +1,12 @@
+import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default class ThreeJSWrapper {
     
     constructor(canvas) {
+
+        //THREE
+        this.THREE = THREE;
 
         //canvas
         this.canvas = canvas;

@@ -12,13 +12,11 @@ npm install three-js-wrapper
 
 Then import
 ```JavaScript
-import * as THREE from 'three';
 import ThreeJSWrapper from 'three-js-wrapper';
 ```
 
 or you can import the minified JS directly into your site
 ```html
-<script src="js/three.min.js"></script>
 <script src="js/three-js-wrapper.min.js"></script>
 ```
 

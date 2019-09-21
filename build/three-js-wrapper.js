@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global = global || self, global.THREE = factory());
+	(global = global || self, global.ThreeJSWrapper = factory());
 }(this, function () { 'use strict';
 
 	// Polyfills
@@ -182,11 +182,17 @@
 		}
 
 	} );
+
+	var REVISION = '108';
 	var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0, DOLLY: 1, PAN: 2 };
 	var TOUCH = { ROTATE: 0, PAN: 1, DOLLY_PAN: 2, DOLLY_ROTATE: 3 };
 	var CullFaceNone = 0;
 	var CullFaceBack = 1;
 	var CullFaceFront = 2;
+	var CullFaceFrontBack = 3;
+	var FrontFaceDirectionCW = 0;
+	var FrontFaceDirectionCCW = 1;
+	var BasicShadowMap = 0;
 	var PCFShadowMap = 1;
 	var PCFSoftShadowMap = 2;
 	var VSMShadowMap = 3;
@@ -194,6 +200,7 @@
 	var BackSide = 1;
 	var DoubleSide = 2;
 	var FlatShading = 1;
+	var SmoothShading = 2;
 	var NoColors = 0;
 	var FaceColors = 1;
 	var VertexColors = 2;
@@ -250,10 +257,14 @@
 	var MirroredRepeatWrapping = 1002;
 	var NearestFilter = 1003;
 	var NearestMipmapNearestFilter = 1004;
+	var NearestMipMapNearestFilter = 1004;
 	var NearestMipmapLinearFilter = 1005;
+	var NearestMipMapLinearFilter = 1005;
 	var LinearFilter = 1006;
 	var LinearMipmapNearestFilter = 1007;
+	var LinearMipMapNearestFilter = 1007;
 	var LinearMipmapLinearFilter = 1008;
+	var LinearMipMapLinearFilter = 1008;
 	var UnsignedByteType = 1009;
 	var ByteType = 1010;
 	var ShortType = 1011;
@@ -271,6 +282,7 @@
 	var RGBAFormat = 1023;
 	var LuminanceFormat = 1024;
 	var LuminanceAlphaFormat = 1025;
+	var RGBEFormat = RGBAFormat;
 	var DepthFormat = 1026;
 	var DepthStencilFormat = 1027;
 	var RedFormat = 1028;
@@ -321,7 +333,23 @@
 	var RGBADepthPacking = 3201;
 	var TangentSpaceNormalMap = 0;
 	var ObjectSpaceNormalMap = 1;
+
+	var ZeroStencilOp = 0;
 	var KeepStencilOp = 7680;
+	var ReplaceStencilOp = 7681;
+	var IncrementStencilOp = 7682;
+	var DecrementStencilOp = 7683;
+	var IncrementWrapStencilOp = 34055;
+	var DecrementWrapStencilOp = 34056;
+	var InvertStencilOp = 5386;
+
+	var NeverStencilFunc = 512;
+	var LessStencilFunc = 513;
+	var EqualStencilFunc = 514;
+	var LessEqualStencilFunc = 515;
+	var GreaterStencilFunc = 516;
+	var NotEqualStencilFunc = 517;
+	var GreaterEqualStencilFunc = 518;
 	var AlwaysStencilFunc = 519;
 
 	/**
@@ -12818,6 +12846,10 @@
 		return merged;
 
 	}
+
+	// Legacy
+
+	var UniformsUtils = { clone: cloneUniforms, merge: mergeUniforms };
 
 	var default_vertex = "void main() {\n\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n}";
 
@@ -46601,6 +46633,165 @@
 	AxesHelper.prototype = Object.create( LineSegments.prototype );
 	AxesHelper.prototype.constructor = AxesHelper;
 
+	/**
+	 * @author mrdoob / http://mrdoob.com/
+	 */
+
+	function Face4( a, b, c, d, normal, color, materialIndex ) {
+
+		console.warn( 'THREE.Face4 has been removed. A THREE.Face3 will be created instead.' );
+		return new Face3( a, b, c, normal, color, materialIndex );
+
+	}
+
+	var LineStrip = 0;
+
+	var LinePieces = 1;
+
+	function MeshFaceMaterial( materials ) {
+
+		console.warn( 'THREE.MeshFaceMaterial has been removed. Use an Array instead.' );
+		return materials;
+
+	}
+
+	function MultiMaterial( materials ) {
+
+		if ( materials === undefined ) { materials = []; }
+
+		console.warn( 'THREE.MultiMaterial has been removed. Use an Array instead.' );
+		materials.isMultiMaterial = true;
+		materials.materials = materials;
+		materials.clone = function () {
+
+			return materials.slice();
+
+		};
+		return materials;
+
+	}
+
+	function PointCloud( geometry, material ) {
+
+		console.warn( 'THREE.PointCloud has been renamed to THREE.Points.' );
+		return new Points( geometry, material );
+
+	}
+
+	function Particle( material ) {
+
+		console.warn( 'THREE.Particle has been renamed to THREE.Sprite.' );
+		return new Sprite( material );
+
+	}
+
+	function ParticleSystem( geometry, material ) {
+
+		console.warn( 'THREE.ParticleSystem has been renamed to THREE.Points.' );
+		return new Points( geometry, material );
+
+	}
+
+	function PointCloudMaterial( parameters ) {
+
+		console.warn( 'THREE.PointCloudMaterial has been renamed to THREE.PointsMaterial.' );
+		return new PointsMaterial( parameters );
+
+	}
+
+	function ParticleBasicMaterial( parameters ) {
+
+		console.warn( 'THREE.ParticleBasicMaterial has been renamed to THREE.PointsMaterial.' );
+		return new PointsMaterial( parameters );
+
+	}
+
+	function ParticleSystemMaterial( parameters ) {
+
+		console.warn( 'THREE.ParticleSystemMaterial has been renamed to THREE.PointsMaterial.' );
+		return new PointsMaterial( parameters );
+
+	}
+
+	function Vertex( x, y, z ) {
+
+		console.warn( 'THREE.Vertex has been removed. Use THREE.Vector3 instead.' );
+		return new Vector3( x, y, z );
+
+	}
+
+	//
+
+	function DynamicBufferAttribute( array, itemSize ) {
+
+		console.warn( 'THREE.DynamicBufferAttribute has been removed. Use new THREE.BufferAttribute().setDynamic( true ) instead.' );
+		return new BufferAttribute( array, itemSize ).setDynamic( true );
+
+	}
+
+	function Int8Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Int8Attribute has been removed. Use new THREE.Int8BufferAttribute() instead.' );
+		return new Int8BufferAttribute( array, itemSize );
+
+	}
+
+	function Uint8Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Uint8Attribute has been removed. Use new THREE.Uint8BufferAttribute() instead.' );
+		return new Uint8BufferAttribute( array, itemSize );
+
+	}
+
+	function Uint8ClampedAttribute( array, itemSize ) {
+
+		console.warn( 'THREE.Uint8ClampedAttribute has been removed. Use new THREE.Uint8ClampedBufferAttribute() instead.' );
+		return new Uint8ClampedBufferAttribute( array, itemSize );
+
+	}
+
+	function Int16Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Int16Attribute has been removed. Use new THREE.Int16BufferAttribute() instead.' );
+		return new Int16BufferAttribute( array, itemSize );
+
+	}
+
+	function Uint16Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Uint16Attribute has been removed. Use new THREE.Uint16BufferAttribute() instead.' );
+		return new Uint16BufferAttribute( array, itemSize );
+
+	}
+
+	function Int32Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Int32Attribute has been removed. Use new THREE.Int32BufferAttribute() instead.' );
+		return new Int32BufferAttribute( array, itemSize );
+
+	}
+
+	function Uint32Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Uint32Attribute has been removed. Use new THREE.Uint32BufferAttribute() instead.' );
+		return new Uint32BufferAttribute( array, itemSize );
+
+	}
+
+	function Float32Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Float32Attribute has been removed. Use new THREE.Float32BufferAttribute() instead.' );
+		return new Float32BufferAttribute( array, itemSize );
+
+	}
+
+	function Float64Attribute( array, itemSize ) {
+
+		console.warn( 'THREE.Float64Attribute has been removed. Use new THREE.Float64BufferAttribute() instead.' );
+		return new Float64BufferAttribute( array, itemSize );
+
+	}
+
 	//
 
 	Curve.create = function ( construct, getPoint ) {
@@ -46675,6 +46866,33 @@
 
 	//
 
+	function ClosedSplineCurve3( points ) {
+
+		console.warn( 'THREE.ClosedSplineCurve3 has been deprecated. Use THREE.CatmullRomCurve3 instead.' );
+
+		CatmullRomCurve3.call( this, points );
+		this.type = 'catmullrom';
+		this.closed = true;
+
+	}
+
+	ClosedSplineCurve3.prototype = Object.create( CatmullRomCurve3.prototype );
+
+	//
+
+	function SplineCurve3( points ) {
+
+		console.warn( 'THREE.SplineCurve3 has been deprecated. Use THREE.CatmullRomCurve3 instead.' );
+
+		CatmullRomCurve3.call( this, points );
+		this.type = 'catmullrom';
+
+	}
+
+	SplineCurve3.prototype = Object.create( CatmullRomCurve3.prototype );
+
+	//
+
 	function Spline( points ) {
 
 		console.warn( 'THREE.Spline has been removed. Use THREE.CatmullRomCurve3 instead.' );
@@ -46706,6 +46924,29 @@
 
 	} );
 
+	//
+
+	function AxisHelper( size ) {
+
+		console.warn( 'THREE.AxisHelper has been renamed to THREE.AxesHelper.' );
+		return new AxesHelper( size );
+
+	}
+
+	function BoundingBoxHelper( object, color ) {
+
+		console.warn( 'THREE.BoundingBoxHelper has been deprecated. Creating a THREE.BoxHelper instead.' );
+		return new BoxHelper( object, color );
+
+	}
+
+	function EdgesHelper( object, hex ) {
+
+		console.warn( 'THREE.EdgesHelper has been removed. Use THREE.EdgesGeometry instead.' );
+		return new LineSegments( new EdgesGeometry( object.geometry ), new LineBasicMaterial( { color: hex !== undefined ? hex : 0xffffff } ) );
+
+	}
+
 	GridHelper.prototype.setColors = function () {
 
 		console.error( 'THREE.GridHelper: setColors() has been deprecated, pass them in the constructor instead.' );
@@ -46717,6 +46958,13 @@
 		console.error( 'THREE.SkeletonHelper: update() no longer needs to be called.' );
 
 	};
+
+	function WireframeHelper( object, hex ) {
+
+		console.warn( 'THREE.WireframeHelper has been removed. Use THREE.WireframeGeometry instead.' );
+		return new LineSegments( new WireframeGeometry( object.geometry ), new LineBasicMaterial( { color: hex !== undefined ? hex : 0xffffff } ) );
+
+	}
 
 	//
 
@@ -46730,6 +46978,20 @@
 		}
 
 	} );
+
+	function XHRLoader( manager ) {
+
+		console.warn( 'THREE.XHRLoader has been renamed to THREE.FileLoader.' );
+		return new FileLoader( manager );
+
+	}
+
+	function BinaryTextureLoader( manager ) {
+
+		console.warn( 'THREE.BinaryTextureLoader has been renamed to THREE.DataTextureLoader.' );
+		return new DataTextureLoader( manager );
+
+	}
 
 	Object.assign( ObjectLoader.prototype, {
 
@@ -48112,6 +48374,37 @@
 
 	};
 
+	//
+
+	var GeometryUtils = {
+
+		merge: function ( geometry1, geometry2, materialIndexOffset ) {
+
+			console.warn( 'THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.' );
+			var matrix;
+
+			if ( geometry2.isMesh ) {
+
+				geometry2.matrixAutoUpdate && geometry2.updateMatrix();
+
+				matrix = geometry2.matrix;
+				geometry2 = geometry2.geometry;
+
+			}
+
+			geometry1.merge( geometry2, matrix, materialIndexOffset );
+
+		},
+
+		center: function ( geometry ) {
+
+			console.warn( 'THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.' );
+			return geometry.center();
+
+		}
+
+	};
+
 	ImageUtils.crossOrigin = undefined;
 
 	ImageUtils.loadTexture = function ( url, mapping, onLoad, onError ) {
@@ -48155,6 +48448,492 @@
 		console.error( 'THREE.ImageUtils.loadCompressedTextureCube has been removed. Use THREE.DDSLoader instead.' );
 
 	};
+
+	//
+
+	function CanvasRenderer() {
+
+		console.error( 'THREE.CanvasRenderer has been removed' );
+
+	}
+
+	//
+
+	function JSONLoader() {
+
+		console.error( 'THREE.JSONLoader has been removed.' );
+
+	}
+
+	//
+
+	var SceneUtils = {
+
+		createMultiMaterialObject: function ( /* geometry, materials */ ) {
+
+			console.error( 'THREE.SceneUtils has been moved to /examples/js/utils/SceneUtils.js' );
+
+		},
+
+		detach: function ( /* child, parent, scene */ ) {
+
+			console.error( 'THREE.SceneUtils has been moved to /examples/js/utils/SceneUtils.js' );
+
+		},
+
+		attach: function ( /* child, scene, parent */ ) {
+
+			console.error( 'THREE.SceneUtils has been moved to /examples/js/utils/SceneUtils.js' );
+
+		}
+
+	};
+
+	//
+
+	function LensFlare() {
+
+		console.error( 'THREE.LensFlare has been moved to /examples/js/objects/Lensflare.js' );
+
+	}
+
+	var THREE$1 = /*#__PURE__*/Object.freeze({
+		ACESFilmicToneMapping: ACESFilmicToneMapping,
+		AddEquation: AddEquation,
+		AddOperation: AddOperation,
+		AdditiveBlending: AdditiveBlending,
+		AlphaFormat: AlphaFormat,
+		AlwaysDepth: AlwaysDepth,
+		AlwaysStencilFunc: AlwaysStencilFunc,
+		AmbientLight: AmbientLight,
+		AmbientLightProbe: AmbientLightProbe,
+		AnimationClip: AnimationClip,
+		AnimationLoader: AnimationLoader,
+		AnimationMixer: AnimationMixer,
+		AnimationObjectGroup: AnimationObjectGroup,
+		AnimationUtils: AnimationUtils,
+		ArcCurve: ArcCurve,
+		ArrayCamera: ArrayCamera,
+		ArrowHelper: ArrowHelper,
+		Audio: Audio,
+		AudioAnalyser: AudioAnalyser,
+		AudioContext: AudioContext,
+		AudioListener: AudioListener,
+		AudioLoader: AudioLoader,
+		AxesHelper: AxesHelper,
+		AxisHelper: AxisHelper,
+		BackSide: BackSide,
+		BasicDepthPacking: BasicDepthPacking,
+		BasicShadowMap: BasicShadowMap,
+		BinaryTextureLoader: BinaryTextureLoader,
+		Bone: Bone,
+		BooleanKeyframeTrack: BooleanKeyframeTrack,
+		BoundingBoxHelper: BoundingBoxHelper,
+		Box2: Box2,
+		Box3: Box3,
+		Box3Helper: Box3Helper,
+		BoxBufferGeometry: BoxBufferGeometry,
+		BoxGeometry: BoxGeometry,
+		BoxHelper: BoxHelper,
+		BufferAttribute: BufferAttribute,
+		BufferGeometry: BufferGeometry,
+		BufferGeometryLoader: BufferGeometryLoader,
+		ByteType: ByteType,
+		Cache: Cache,
+		Camera: Camera,
+		CameraHelper: CameraHelper,
+		CanvasRenderer: CanvasRenderer,
+		CanvasTexture: CanvasTexture,
+		CatmullRomCurve3: CatmullRomCurve3,
+		CineonToneMapping: CineonToneMapping,
+		CircleBufferGeometry: CircleBufferGeometry,
+		CircleGeometry: CircleGeometry,
+		ClampToEdgeWrapping: ClampToEdgeWrapping,
+		Clock: Clock,
+		ClosedSplineCurve3: ClosedSplineCurve3,
+		Color: Color,
+		ColorKeyframeTrack: ColorKeyframeTrack,
+		CompressedTexture: CompressedTexture,
+		CompressedTextureLoader: CompressedTextureLoader,
+		ConeBufferGeometry: ConeBufferGeometry,
+		ConeGeometry: ConeGeometry,
+		CubeCamera: CubeCamera,
+		CubeGeometry: BoxGeometry,
+		CubeReflectionMapping: CubeReflectionMapping,
+		CubeRefractionMapping: CubeRefractionMapping,
+		CubeTexture: CubeTexture,
+		CubeTextureLoader: CubeTextureLoader,
+		CubeUVReflectionMapping: CubeUVReflectionMapping,
+		CubeUVRefractionMapping: CubeUVRefractionMapping,
+		CubicBezierCurve: CubicBezierCurve,
+		CubicBezierCurve3: CubicBezierCurve3,
+		CubicInterpolant: CubicInterpolant,
+		CullFaceBack: CullFaceBack,
+		CullFaceFront: CullFaceFront,
+		CullFaceFrontBack: CullFaceFrontBack,
+		CullFaceNone: CullFaceNone,
+		Curve: Curve,
+		CurvePath: CurvePath,
+		CustomBlending: CustomBlending,
+		CylinderBufferGeometry: CylinderBufferGeometry,
+		CylinderGeometry: CylinderGeometry,
+		Cylindrical: Cylindrical,
+		DataTexture: DataTexture,
+		DataTexture2DArray: DataTexture2DArray,
+		DataTexture3D: DataTexture3D,
+		DataTextureLoader: DataTextureLoader,
+		DecrementStencilOp: DecrementStencilOp,
+		DecrementWrapStencilOp: DecrementWrapStencilOp,
+		DefaultLoadingManager: DefaultLoadingManager,
+		DepthFormat: DepthFormat,
+		DepthStencilFormat: DepthStencilFormat,
+		DepthTexture: DepthTexture,
+		DirectionalLight: DirectionalLight,
+		DirectionalLightHelper: DirectionalLightHelper,
+		DirectionalLightShadow: DirectionalLightShadow,
+		DiscreteInterpolant: DiscreteInterpolant,
+		DodecahedronBufferGeometry: DodecahedronBufferGeometry,
+		DodecahedronGeometry: DodecahedronGeometry,
+		DoubleSide: DoubleSide,
+		DstAlphaFactor: DstAlphaFactor,
+		DstColorFactor: DstColorFactor,
+		DynamicBufferAttribute: DynamicBufferAttribute,
+		EdgesGeometry: EdgesGeometry,
+		EdgesHelper: EdgesHelper,
+		EllipseCurve: EllipseCurve,
+		EqualDepth: EqualDepth,
+		EqualStencilFunc: EqualStencilFunc,
+		EquirectangularReflectionMapping: EquirectangularReflectionMapping,
+		EquirectangularRefractionMapping: EquirectangularRefractionMapping,
+		Euler: Euler,
+		EventDispatcher: EventDispatcher,
+		ExtrudeBufferGeometry: ExtrudeBufferGeometry,
+		ExtrudeGeometry: ExtrudeGeometry,
+		Face3: Face3,
+		Face4: Face4,
+		FaceColors: FaceColors,
+		FaceNormalsHelper: FaceNormalsHelper,
+		FileLoader: FileLoader,
+		FlatShading: FlatShading,
+		Float32Attribute: Float32Attribute,
+		Float32BufferAttribute: Float32BufferAttribute,
+		Float64Attribute: Float64Attribute,
+		Float64BufferAttribute: Float64BufferAttribute,
+		FloatType: FloatType,
+		Fog: Fog,
+		FogExp2: FogExp2,
+		Font: Font,
+		FontLoader: FontLoader,
+		FrontFaceDirectionCCW: FrontFaceDirectionCCW,
+		FrontFaceDirectionCW: FrontFaceDirectionCW,
+		FrontSide: FrontSide,
+		Frustum: Frustum,
+		GammaEncoding: GammaEncoding,
+		Geometry: Geometry,
+		GeometryUtils: GeometryUtils,
+		GreaterDepth: GreaterDepth,
+		GreaterEqualDepth: GreaterEqualDepth,
+		GreaterEqualStencilFunc: GreaterEqualStencilFunc,
+		GreaterStencilFunc: GreaterStencilFunc,
+		GridHelper: GridHelper,
+		Group: Group,
+		HalfFloatType: HalfFloatType,
+		HemisphereLight: HemisphereLight,
+		HemisphereLightHelper: HemisphereLightHelper,
+		HemisphereLightProbe: HemisphereLightProbe,
+		IcosahedronBufferGeometry: IcosahedronBufferGeometry,
+		IcosahedronGeometry: IcosahedronGeometry,
+		ImageBitmapLoader: ImageBitmapLoader,
+		ImageLoader: ImageLoader,
+		ImageUtils: ImageUtils,
+		ImmediateRenderObject: ImmediateRenderObject,
+		IncrementStencilOp: IncrementStencilOp,
+		IncrementWrapStencilOp: IncrementWrapStencilOp,
+		InstancedBufferAttribute: InstancedBufferAttribute,
+		InstancedBufferGeometry: InstancedBufferGeometry,
+		InstancedInterleavedBuffer: InstancedInterleavedBuffer,
+		Int16Attribute: Int16Attribute,
+		Int16BufferAttribute: Int16BufferAttribute,
+		Int32Attribute: Int32Attribute,
+		Int32BufferAttribute: Int32BufferAttribute,
+		Int8Attribute: Int8Attribute,
+		Int8BufferAttribute: Int8BufferAttribute,
+		IntType: IntType,
+		InterleavedBuffer: InterleavedBuffer,
+		InterleavedBufferAttribute: InterleavedBufferAttribute,
+		Interpolant: Interpolant,
+		InterpolateDiscrete: InterpolateDiscrete,
+		InterpolateLinear: InterpolateLinear,
+		InterpolateSmooth: InterpolateSmooth,
+		InvertStencilOp: InvertStencilOp,
+		JSONLoader: JSONLoader,
+		KeepStencilOp: KeepStencilOp,
+		KeyframeTrack: KeyframeTrack,
+		LOD: LOD,
+		LatheBufferGeometry: LatheBufferGeometry,
+		LatheGeometry: LatheGeometry,
+		Layers: Layers,
+		LensFlare: LensFlare,
+		LessDepth: LessDepth,
+		LessEqualDepth: LessEqualDepth,
+		LessEqualStencilFunc: LessEqualStencilFunc,
+		LessStencilFunc: LessStencilFunc,
+		Light: Light,
+		LightProbe: LightProbe,
+		LightProbeHelper: LightProbeHelper,
+		LightShadow: LightShadow,
+		Line: Line,
+		Line3: Line3,
+		LineBasicMaterial: LineBasicMaterial,
+		LineCurve: LineCurve,
+		LineCurve3: LineCurve3,
+		LineDashedMaterial: LineDashedMaterial,
+		LineLoop: LineLoop,
+		LinePieces: LinePieces,
+		LineSegments: LineSegments,
+		LineStrip: LineStrip,
+		LinearEncoding: LinearEncoding,
+		LinearFilter: LinearFilter,
+		LinearInterpolant: LinearInterpolant,
+		LinearMipMapLinearFilter: LinearMipMapLinearFilter,
+		LinearMipMapNearestFilter: LinearMipMapNearestFilter,
+		LinearMipmapLinearFilter: LinearMipmapLinearFilter,
+		LinearMipmapNearestFilter: LinearMipmapNearestFilter,
+		LinearToneMapping: LinearToneMapping,
+		Loader: Loader,
+		LoaderUtils: LoaderUtils,
+		LoadingManager: LoadingManager,
+		LogLuvEncoding: LogLuvEncoding,
+		LoopOnce: LoopOnce,
+		LoopPingPong: LoopPingPong,
+		LoopRepeat: LoopRepeat,
+		LuminanceAlphaFormat: LuminanceAlphaFormat,
+		LuminanceFormat: LuminanceFormat,
+		MOUSE: MOUSE,
+		Material: Material,
+		MaterialLoader: MaterialLoader,
+		Math: _Math,
+		Matrix3: Matrix3,
+		Matrix4: Matrix4,
+		MaxEquation: MaxEquation,
+		Mesh: Mesh,
+		MeshBasicMaterial: MeshBasicMaterial,
+		MeshDepthMaterial: MeshDepthMaterial,
+		MeshDistanceMaterial: MeshDistanceMaterial,
+		MeshFaceMaterial: MeshFaceMaterial,
+		MeshLambertMaterial: MeshLambertMaterial,
+		MeshMatcapMaterial: MeshMatcapMaterial,
+		MeshNormalMaterial: MeshNormalMaterial,
+		MeshPhongMaterial: MeshPhongMaterial,
+		MeshPhysicalMaterial: MeshPhysicalMaterial,
+		MeshStandardMaterial: MeshStandardMaterial,
+		MeshToonMaterial: MeshToonMaterial,
+		MinEquation: MinEquation,
+		MirroredRepeatWrapping: MirroredRepeatWrapping,
+		MixOperation: MixOperation,
+		MultiMaterial: MultiMaterial,
+		MultiplyBlending: MultiplyBlending,
+		MultiplyOperation: MultiplyOperation,
+		NearestFilter: NearestFilter,
+		NearestMipMapLinearFilter: NearestMipMapLinearFilter,
+		NearestMipMapNearestFilter: NearestMipMapNearestFilter,
+		NearestMipmapLinearFilter: NearestMipmapLinearFilter,
+		NearestMipmapNearestFilter: NearestMipmapNearestFilter,
+		NeverDepth: NeverDepth,
+		NeverStencilFunc: NeverStencilFunc,
+		NoBlending: NoBlending,
+		NoColors: NoColors,
+		NoToneMapping: NoToneMapping,
+		NormalBlending: NormalBlending,
+		NotEqualDepth: NotEqualDepth,
+		NotEqualStencilFunc: NotEqualStencilFunc,
+		NumberKeyframeTrack: NumberKeyframeTrack,
+		Object3D: Object3D,
+		ObjectLoader: ObjectLoader,
+		ObjectSpaceNormalMap: ObjectSpaceNormalMap,
+		OctahedronBufferGeometry: OctahedronBufferGeometry,
+		OctahedronGeometry: OctahedronGeometry,
+		OneFactor: OneFactor,
+		OneMinusDstAlphaFactor: OneMinusDstAlphaFactor,
+		OneMinusDstColorFactor: OneMinusDstColorFactor,
+		OneMinusSrcAlphaFactor: OneMinusSrcAlphaFactor,
+		OneMinusSrcColorFactor: OneMinusSrcColorFactor,
+		OrthographicCamera: OrthographicCamera,
+		PCFShadowMap: PCFShadowMap,
+		PCFSoftShadowMap: PCFSoftShadowMap,
+		ParametricBufferGeometry: ParametricBufferGeometry,
+		ParametricGeometry: ParametricGeometry,
+		Particle: Particle,
+		ParticleBasicMaterial: ParticleBasicMaterial,
+		ParticleSystem: ParticleSystem,
+		ParticleSystemMaterial: ParticleSystemMaterial,
+		Path: Path,
+		PerspectiveCamera: PerspectiveCamera,
+		Plane: Plane,
+		PlaneBufferGeometry: PlaneBufferGeometry,
+		PlaneGeometry: PlaneGeometry,
+		PlaneHelper: PlaneHelper,
+		PointCloud: PointCloud,
+		PointCloudMaterial: PointCloudMaterial,
+		PointLight: PointLight,
+		PointLightHelper: PointLightHelper,
+		Points: Points,
+		PointsMaterial: PointsMaterial,
+		PolarGridHelper: PolarGridHelper,
+		PolyhedronBufferGeometry: PolyhedronBufferGeometry,
+		PolyhedronGeometry: PolyhedronGeometry,
+		PositionalAudio: PositionalAudio,
+		PositionalAudioHelper: PositionalAudioHelper,
+		PropertyBinding: PropertyBinding,
+		PropertyMixer: PropertyMixer,
+		QuadraticBezierCurve: QuadraticBezierCurve,
+		QuadraticBezierCurve3: QuadraticBezierCurve3,
+		Quaternion: Quaternion,
+		QuaternionKeyframeTrack: QuaternionKeyframeTrack,
+		QuaternionLinearInterpolant: QuaternionLinearInterpolant,
+		REVISION: REVISION,
+		RGBADepthPacking: RGBADepthPacking,
+		RGBAFormat: RGBAFormat,
+		RGBA_ASTC_10x10_Format: RGBA_ASTC_10x10_Format,
+		RGBA_ASTC_10x5_Format: RGBA_ASTC_10x5_Format,
+		RGBA_ASTC_10x6_Format: RGBA_ASTC_10x6_Format,
+		RGBA_ASTC_10x8_Format: RGBA_ASTC_10x8_Format,
+		RGBA_ASTC_12x10_Format: RGBA_ASTC_12x10_Format,
+		RGBA_ASTC_12x12_Format: RGBA_ASTC_12x12_Format,
+		RGBA_ASTC_4x4_Format: RGBA_ASTC_4x4_Format,
+		RGBA_ASTC_5x4_Format: RGBA_ASTC_5x4_Format,
+		RGBA_ASTC_5x5_Format: RGBA_ASTC_5x5_Format,
+		RGBA_ASTC_6x5_Format: RGBA_ASTC_6x5_Format,
+		RGBA_ASTC_6x6_Format: RGBA_ASTC_6x6_Format,
+		RGBA_ASTC_8x5_Format: RGBA_ASTC_8x5_Format,
+		RGBA_ASTC_8x6_Format: RGBA_ASTC_8x6_Format,
+		RGBA_ASTC_8x8_Format: RGBA_ASTC_8x8_Format,
+		RGBA_PVRTC_2BPPV1_Format: RGBA_PVRTC_2BPPV1_Format,
+		RGBA_PVRTC_4BPPV1_Format: RGBA_PVRTC_4BPPV1_Format,
+		RGBA_S3TC_DXT1_Format: RGBA_S3TC_DXT1_Format,
+		RGBA_S3TC_DXT3_Format: RGBA_S3TC_DXT3_Format,
+		RGBA_S3TC_DXT5_Format: RGBA_S3TC_DXT5_Format,
+		RGBDEncoding: RGBDEncoding,
+		RGBEEncoding: RGBEEncoding,
+		RGBEFormat: RGBEFormat,
+		RGBFormat: RGBFormat,
+		RGBM16Encoding: RGBM16Encoding,
+		RGBM7Encoding: RGBM7Encoding,
+		RGB_ETC1_Format: RGB_ETC1_Format,
+		RGB_PVRTC_2BPPV1_Format: RGB_PVRTC_2BPPV1_Format,
+		RGB_PVRTC_4BPPV1_Format: RGB_PVRTC_4BPPV1_Format,
+		RGB_S3TC_DXT1_Format: RGB_S3TC_DXT1_Format,
+		RawShaderMaterial: RawShaderMaterial,
+		Ray: Ray,
+		Raycaster: Raycaster,
+		RectAreaLight: RectAreaLight,
+		RectAreaLightHelper: RectAreaLightHelper,
+		RedFormat: RedFormat,
+		ReinhardToneMapping: ReinhardToneMapping,
+		RepeatWrapping: RepeatWrapping,
+		ReplaceStencilOp: ReplaceStencilOp,
+		ReverseSubtractEquation: ReverseSubtractEquation,
+		RingBufferGeometry: RingBufferGeometry,
+		RingGeometry: RingGeometry,
+		Scene: Scene,
+		SceneUtils: SceneUtils,
+		ShaderChunk: ShaderChunk,
+		ShaderLib: ShaderLib,
+		ShaderMaterial: ShaderMaterial,
+		ShadowMaterial: ShadowMaterial,
+		Shape: Shape,
+		ShapeBufferGeometry: ShapeBufferGeometry,
+		ShapeGeometry: ShapeGeometry,
+		ShapePath: ShapePath,
+		ShapeUtils: ShapeUtils,
+		ShortType: ShortType,
+		Skeleton: Skeleton,
+		SkeletonHelper: SkeletonHelper,
+		SkinnedMesh: SkinnedMesh,
+		SmoothShading: SmoothShading,
+		Sphere: Sphere,
+		SphereBufferGeometry: SphereBufferGeometry,
+		SphereGeometry: SphereGeometry,
+		Spherical: Spherical,
+		SphericalHarmonics3: SphericalHarmonics3,
+		SphericalReflectionMapping: SphericalReflectionMapping,
+		Spline: Spline,
+		SplineCurve: SplineCurve,
+		SplineCurve3: SplineCurve3,
+		SpotLight: SpotLight,
+		SpotLightHelper: SpotLightHelper,
+		SpotLightShadow: SpotLightShadow,
+		Sprite: Sprite,
+		SpriteMaterial: SpriteMaterial,
+		SrcAlphaFactor: SrcAlphaFactor,
+		SrcAlphaSaturateFactor: SrcAlphaSaturateFactor,
+		SrcColorFactor: SrcColorFactor,
+		StereoCamera: StereoCamera,
+		StringKeyframeTrack: StringKeyframeTrack,
+		SubtractEquation: SubtractEquation,
+		SubtractiveBlending: SubtractiveBlending,
+		TOUCH: TOUCH,
+		TangentSpaceNormalMap: TangentSpaceNormalMap,
+		TetrahedronBufferGeometry: TetrahedronBufferGeometry,
+		TetrahedronGeometry: TetrahedronGeometry,
+		TextBufferGeometry: TextBufferGeometry,
+		TextGeometry: TextGeometry,
+		Texture: Texture,
+		TextureLoader: TextureLoader,
+		TorusBufferGeometry: TorusBufferGeometry,
+		TorusGeometry: TorusGeometry,
+		TorusKnotBufferGeometry: TorusKnotBufferGeometry,
+		TorusKnotGeometry: TorusKnotGeometry,
+		Triangle: Triangle,
+		TriangleFanDrawMode: TriangleFanDrawMode,
+		TriangleStripDrawMode: TriangleStripDrawMode,
+		TrianglesDrawMode: TrianglesDrawMode,
+		TubeBufferGeometry: TubeBufferGeometry,
+		TubeGeometry: TubeGeometry,
+		UVMapping: UVMapping,
+		Uint16Attribute: Uint16Attribute,
+		Uint16BufferAttribute: Uint16BufferAttribute,
+		Uint32Attribute: Uint32Attribute,
+		Uint32BufferAttribute: Uint32BufferAttribute,
+		Uint8Attribute: Uint8Attribute,
+		Uint8BufferAttribute: Uint8BufferAttribute,
+		Uint8ClampedAttribute: Uint8ClampedAttribute,
+		Uint8ClampedBufferAttribute: Uint8ClampedBufferAttribute,
+		Uncharted2ToneMapping: Uncharted2ToneMapping,
+		Uniform: Uniform,
+		UniformsLib: UniformsLib,
+		UniformsUtils: UniformsUtils,
+		UnsignedByteType: UnsignedByteType,
+		UnsignedInt248Type: UnsignedInt248Type,
+		UnsignedIntType: UnsignedIntType,
+		UnsignedShort4444Type: UnsignedShort4444Type,
+		UnsignedShort5551Type: UnsignedShort5551Type,
+		UnsignedShort565Type: UnsignedShort565Type,
+		UnsignedShortType: UnsignedShortType,
+		VSMShadowMap: VSMShadowMap,
+		Vector2: Vector2,
+		Vector3: Vector3,
+		Vector4: Vector4,
+		VectorKeyframeTrack: VectorKeyframeTrack,
+		Vertex: Vertex,
+		VertexColors: VertexColors,
+		VertexNormalsHelper: VertexNormalsHelper,
+		VideoTexture: VideoTexture,
+		WebGLMultisampleRenderTarget: WebGLMultisampleRenderTarget,
+		WebGLRenderTarget: WebGLRenderTarget,
+		WebGLRenderTargetCube: WebGLRenderTargetCube,
+		WebGLRenderer: WebGLRenderer,
+		WebGLUtils: WebGLUtils,
+		WireframeGeometry: WireframeGeometry,
+		WireframeHelper: WireframeHelper,
+		WrapAroundEnding: WrapAroundEnding,
+		XHRLoader: XHRLoader,
+		ZeroCurvatureEnding: ZeroCurvatureEnding,
+		ZeroFactor: ZeroFactor,
+		ZeroSlopeEnding: ZeroSlopeEnding,
+		ZeroStencilOp: ZeroStencilOp,
+		sRGBEncoding: sRGBEncoding
+	});
 
 	/**
 	 * @author qiao / https://github.com/qiao
@@ -48688,6 +49467,12 @@
 
 		}
 
+		function handleMouseUp( /*event*/ ) {
+
+			// no-op
+
+		}
+
 		function handleMouseWheel( event ) {
 
 			if ( event.deltaY < 0 ) {
@@ -48888,6 +49673,12 @@
 
 		}
 
+		function handleTouchEnd( /*event*/ ) {
+
+			// no-op
+
+		}
+
 		//
 		// event handlers - FSM: listen for events and reset state
 		//
@@ -49072,6 +49863,8 @@
 
 			if ( scope.enabled === false ) { return; }
 
+			handleMouseUp( event );
+
 			document.removeEventListener( 'mousemove', onMouseMove, false );
 			document.removeEventListener( 'mouseup', onMouseUp, false );
 
@@ -49251,6 +50044,8 @@
 
 			if ( scope.enabled === false ) { return; }
 
+			handleTouchEnd( event );
+
 			scope.dispatchEvent( endEvent );
 
 			state = STATE.NONE;
@@ -49313,6 +50108,9 @@
 
 	var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
 
+	     //THREE
+	     this.THREE = THREE$1;
+
 	     //canvas
 	     this.canvas = canvas;
 	        
@@ -49326,7 +50124,7 @@
 	     this.camera = this.buildCamera(this.dimensions);
 	            
 	     //scene
-	     this.scene = new THREE.Scene();
+	     this.scene = new Scene();
 	        
 	     //renderer
 	     this.renderer = this.buildRenderer(this.dimensions);
@@ -49397,7 +50195,7 @@
 	        var width = ref.width;
 	        var height = ref.height;
 
-	     var renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+	     var renderer = new WebGLRenderer({canvas: this.canvas});
 	     renderer.setSize(width,height);
 	     return renderer;
 	 };
@@ -49412,7 +50210,7 @@
 	     var near = 0.1;
 	     var far = 1000;
 	        
-	     return new THREE.PerspectiveCamera(fov,aspect,near,far);
+	     return new PerspectiveCamera(fov,aspect,near,far);
 	 };
 
 	return ThreeJSWrapper;

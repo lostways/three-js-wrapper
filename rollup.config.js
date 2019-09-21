@@ -6,9 +6,9 @@ export default [
     {
         input: 'src/ThreeJSWrapper.js',
         plugins: [resolve(),buble()],
+        treeshake: false,
         output: [
             {
-                globals: () => 'THREE',
                 format: 'umd',
                 name: 'ThreeJSWrapper',
                 file: 'build/three-js-wrapper.js'
@@ -18,9 +18,9 @@ export default [
     {
         input: 'src/ThreeJSWrapper.js',
         plugins: [resolve(),buble()],
+        treeshake: false,
         output: [
             {
-                globals: () => 'THREE',
                 format: 'esm',
                 file: 'build/three-js-wrapper.module.js'
             }
@@ -30,15 +30,14 @@ export default [
 
         input: 'src/ThreeJSWrapper.js',
         plugins: [resolve(),buble(),uglify()],
+        treeshake: false,
         output: [
             {
-                globals: () => 'THREE',
                 format: 'umd',
                 name: 'ThreeJSWrapper',
                 file: 'build/three-js-wrapper.min.js',
                 compact: true
             }
         ]
-    },
-
+    }
 ]

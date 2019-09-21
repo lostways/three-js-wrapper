@@ -12,7 +12,6 @@
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    <script src="../node_modules/three/build/three.js"></script>
     <script type="module">
         /**
          * Example: Displays a rotating wireframe sphere
@@ -24,7 +23,7 @@
         let renderer = new ThreeJSWrapper(canvas);
 
         //create entitites
-        let sphere = new WireframeSphere({z:-25});
+        let sphere = new WireframeSphere(renderer.THREE,{z:-25});
 
         //add enitities
         renderer.addEntity(sphere);
