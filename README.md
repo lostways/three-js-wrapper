@@ -5,12 +5,11 @@ Three.js wrapper makes it easy to get started with three.js
 ## Installation
 
 You can install using npm
-
 ```bash
 npm install three-js-wrapper
 ```
 
-Then import
+Import into your project
 ```JavaScript
 import ThreeJSWrapper from 'three-js-wrapper';
 ```
