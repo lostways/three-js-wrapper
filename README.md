@@ -33,7 +33,7 @@ Start by installing dependencies
 npm install
 ```
 
-All source files along with examples of usage are located in the /src directory. To build the source run:
+All source files are located in the /src directory. Examples are in teh /examples directory. To build the source run:
 ```bash
 npm run build
 ```
