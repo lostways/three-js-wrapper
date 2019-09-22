@@ -50134,7 +50134,7 @@
 	    
 	 //add an entity to the scene
 	 ThreeJSWrapper.prototype.addEntity = function addEntity (entity) {
-	     this.scene.add(entity.obj3d);
+	     this.scene.add(entity);
 	 };
 	    
 	 //start the animation loop

@@ -20,19 +20,19 @@
         import WireframeSphere from './entities/WireframeSphere.js';
 
         let canvas = document.getElementById("canvas");
-        let renderer = new ThreeJSWrapper(canvas);
+        let wrapper = new ThreeJSWrapper(canvas);
 
         //create entitites
-        let sphere = new WireframeSphere(renderer.THREE,{z:-25});
+        let sphere = new WireframeSphere(wrapper,{z:-25});
 
         //add enitities
-        renderer.addEntity(sphere);
+        wrapper.addEntity(sphere);
 
         //position controls
-        renderer.controls.target.set(0,0,-25);
+        wrapper.controls.target.set(0,0,-25);
 
-        //start renderer
-        renderer.start();
+        //start wrapper 
+        wrapper.start();
     </script>
 </body>
 

@@ -31,7 +31,7 @@ export default class ThreeJSWrapper {
     
     //add an entity to the scene
     addEntity(entity) {
-        this.scene.add(entity.obj3d);
+        this.scene.add(entity);
     }
     
     //start the animation loop
