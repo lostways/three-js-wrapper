@@ -1,6 +1,6 @@
 # three.js wrapper
 
-three.js wrapper allows you to organize your Three.js code in to entities. Animations are done by defining a frame handler for each entity.
+Three.js wrapper makes it easy to get started with three.js
 
 ## Installation
 
