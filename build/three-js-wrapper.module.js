@@ -50101,10 +50101,6 @@ MapControls.prototype = Object.create( EventDispatcher.prototype );
 MapControls.prototype.constructor = MapControls;
 
 var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
-
-     //THREE
-     this.THREE = THREE$1;
-
      //canvas
      this.canvas = canvas;
         
@@ -50125,9 +50121,13 @@ var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
         
      this.controls = new OrbitControls( this.camera );
  };
+
+var staticAccessors = { THREE: { configurable: true } };
     
  //add an entity to the scene
- ThreeJSWrapper.prototype.addEntity = function addEntity (entity) {
+ staticAccessors.THREE.get = function () { return THREE$1; };
+
+ThreeJSWrapper.prototype.addEntity = function addEntity (entity) {
      this.scene.add(entity);
  };
     
@@ -50207,4 +50207,38 @@ ThreeJSWrapper.prototype.bindEventListeners = function bindEventListeners () {
      return new PerspectiveCamera(fov,aspect,near,far);
  };
 
+Object.defineProperties( ThreeJSWrapper, staticAccessors );
+
+//Entity base class
+var ThreeJSEntity = function ThreeJSEntity (params){
+    if ( params === void 0 ) params = {};
+
+    this.THREE = ThreeJSWrapper.THREE;
+        
+    var Obj3d = this.create(params);
+        
+    Obj3d.addEventListener('update', this.update);
+
+    return Obj3d;
+};
+
+/**
+ * Override to create entity obj3d
+ * @abstract
+ * @param {object} params
+ * @return {Object3D}
+ */
+ThreeJSEntity.prototype.create = function create (params) {
+        if ( params === void 0 ) params = {};
+
+    throw new Error('Entities must have a create method');
+};
+
+/**
+ * Override to define animations
+ */
+ThreeJSEntity.prototype.update = function update () {};
+;
+
 export default ThreeJSWrapper;
+export { ThreeJSEntity };

@@ -4,19 +4,18 @@ import { uglify } from "rollup-plugin-uglify";
 
 export default [
     {
-        input: 'src/ThreeJSWrapper.js',
+        input: 'index.js',
         plugins: [resolve(),buble()],
         treeshake: false,
         output: [
             {
-                format: 'umd',
-                name: 'ThreeJSWrapper',
+                format: 'cjs',
                 file: 'build/three-js-wrapper.js'
             }
         ]
     },
     {
-        input: 'src/ThreeJSWrapper.js',
+        input: 'index.js',
         plugins: [resolve(),buble()],
         treeshake: false,
         output: [
@@ -28,13 +27,12 @@ export default [
     },
     {
 
-        input: 'src/ThreeJSWrapper.js',
+        input: 'index.js',
         plugins: [resolve(),buble(),uglify()],
         treeshake: false,
         output: [
             {
-                format: 'umd',
-                name: 'ThreeJSWrapper',
+                format: 'cjs',
                 file: 'build/three-js-wrapper.min.js',
                 compact: true
             }
