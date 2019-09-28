@@ -25,7 +25,7 @@ export default class ThreeJSWrapper {
         //renderer
         this.renderer = this.buildRenderer(this.dimensions);
         
-        this.controls = new OrbitControls( this.camera );
+        this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     }
     
     //add an entity to the scene

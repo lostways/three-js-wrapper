@@ -50119,7 +50119,7 @@ var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
      //renderer
      this.renderer = this.buildRenderer(this.dimensions);
         
-     this.controls = new OrbitControls( this.camera );
+     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
  };
 
 var staticAccessors = { THREE: { configurable: true } };
