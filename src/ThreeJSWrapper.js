@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default class ThreeJSWrapper {
 
-    //Static THREE instance
+    //static THREE instance
     static get THREE() { return THREE; };
 
     constructor(canvas) {

@@ -11,29 +11,12 @@
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <script type="module">
-        /**
-         * Example: Displays a rotating wireframe sphere
-         **/
-        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
-        import WireframeSphere from './entities/WireframeSphere.js';
-
-        let canvas = document.getElementById("canvas");
-        let wrapper = new ThreeJSWrapper(canvas);
-
-        //create entitites
-        let sphere = new WireframeSphere({z:-25});
-
-        //add enitities
-        wrapper.addEntity(sphere);
-
-        //position controls
-        wrapper.controls.target.set(0,0,-25);
-
-        //start wrapper 
-        wrapper.start();
-    </script>
+    <h1>Examples</h1>
+    <nav class="navigation">
+        <ul class="menu">
+          <li><a href="normal-box.html">Normal Box</a></li>
+          <li><a href="wireframe-sphere.html">Wireframe Sphere</a></li>
+        </ul>
+      </nav>
 </body>
-
 </html>
