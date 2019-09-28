@@ -2,6 +2,8 @@
 
 Three.js wrapper makes it easy to get started with three.js
 
+_Please note this is a work in progress, there may be frequent breaking changes. If you'd like to help out or have any suggestions let me know._
+
 ## Installation
 
 You can install using npm
