@@ -25,7 +25,74 @@ Built and minified library is located in the /build directory
 
 ## Usage
 
-@todo define usage
+### Define an Entity
+
+Entities are objects that will be placed in your scene via the wrapper. Every entity exposes a `create` and `update` method. 
+
+`create` method returns a ThreeJS Object3D object.
+
+`update` method gets called once per animation frame.
+
+Rotating Wireframe Sphere Example:
+
+```JavaScript
+import { ThreeJSEntity } from '../../build/three-js-wrapper.module.js';
+
+//wireframe sphere
+export default class WireframeSphere extends ThreeJSEntity {
+    create (
+        {
+            x = 0,
+            y = 0,
+            z = 0,
+            radius = 10,
+            segments = 16,
+            rings = 16,
+            color = 0xCC0000
+        } = {} 
+    ){
+        this.material = new this.THREE.MeshBasicMaterial( { wireframe: true, color: color } );
+        this.geo = new this.THREE.SphereGeometry(radius,segments,rings);
+        this.obj3d = new this.THREE.Mesh(this.geo,this.material);
+
+        this.obj3d.position.z = z;
+        this.obj3d.position.y = y;
+        this.obj3d.position.x = x;
+
+        return this.obj3d;
+    }
+
+    update () {
+        this.rotation.y -= .005;
+    }
+ };
+ ```
+ 
+ ### Add Entity to wrapper and start
+ 
+ Example that uses the WireframeSphere Entity:
+ 
+ ```JavaScript
+import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
+import WireframeSphere from './entities/WireframeSphere.js';
+
+let canvas = document.getElementById("canvas");
+let wrapper = new ThreeJSWrapper(canvas);
+
+//create entitites
+let sphere = new WireframeSphere({z:-25});
+
+//add enitities
+wrapper.addEntity(sphere);
+
+//position controls
+wrapper.controls.target.set(0,0,-25);
+
+//start wrapper 
+wrapper.start();
+```
+
+For more examples see the examples directory.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
