@@ -1,6 +1,6 @@
 # three.js wrapper
 
-Three.js wrapper makes it easy to get started with three.js
+Three.js wrapper provies a basic framework for using Three.js to add 3d objects and animations to your project.
 
 ## Installation
 
