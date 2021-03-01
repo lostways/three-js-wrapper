@@ -48492,6 +48492,7 @@ function LensFlare() {
 }
 
 var THREE$1 = /*#__PURE__*/Object.freeze({
+	__proto__: null,
 	ACESFilmicToneMapping: ACESFilmicToneMapping,
 	AddEquation: AddEquation,
 	AddOperation: AddOperation,
@@ -50101,144 +50102,115 @@ MapControls.prototype = Object.create( EventDispatcher.prototype );
 MapControls.prototype.constructor = MapControls;
 
 var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
-     //canvas
-     this.canvas = canvas;
-        
-     //dimensions
-     this.dimensions = {
-         width: canvas.width,
-         height: canvas.height
-     };
-
-     //camera
-     this.camera = this.buildCamera(this.dimensions);
-            
-     //scene
-     this.scene = new Scene();
-        
-     //renderer
-     this.renderer = this.buildRenderer(this.dimensions);
-        
-     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
- };
+    //canvas
+    this.canvas = canvas;
+    //dimensions
+    this.dimensions = {
+        width: canvas.width,
+        height: canvas.height,
+    };
+    //camera
+    this.camera = this.buildCamera(this.dimensions);
+    //scene
+    this.scene = new Scene();
+    //renderer
+    this.renderer = this.buildRenderer(this.dimensions);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+};
 
 var staticAccessors = { THREE: { configurable: true } };
-    
- //add an entity to the scene
- staticAccessors.THREE.get = function () { return THREE$1; };
-
+//static THREE instance
+staticAccessors.THREE.get = function () {
+    return THREE$1;
+};
+//add an entity to the scene
 ThreeJSWrapper.prototype.addEntity = function addEntity (entity) {
-     this.scene.add(entity);
- };
-    
- //start the animation loop
- ThreeJSWrapper.prototype.start = function start () {
-     this.resize();
-     this.bindEventListeners();
-     this.renderer.render( this.scene, this.camera );
-     this.loop();
- };
-    
- //update the scene animation
- ThreeJSWrapper.prototype.update = function update () {
-      this.scene.children.forEach(function (ent) {
-         ent.dispatchEvent({ type: 'update' });
-      });
- };
-    
- //the animation loop
- ThreeJSWrapper.prototype.loop = function loop () {
-     requestAnimationFrame( this.loop.bind(this) );
-     this.update();
-     this.renderer.render( this.scene, this.camera );
- };
-    
- //resize the scene to the current canvas size
- ThreeJSWrapper.prototype.resize = function resize () {
-     this.fullscreen();
-        
-     var ref = this.canvas;
+    this.scene.add(entity.object3d);
+};
+//start the animation loop
+ThreeJSWrapper.prototype.start = function start () {
+    this.resize();
+    this.bindEventListeners();
+    this.renderer.render(this.scene, this.camera);
+    this.loop();
+};
+//update the scene animation
+ThreeJSWrapper.prototype.update = function update () {
+    this.scene.children.forEach(function (ent) {
+        ent.dispatchEvent({ type: "update" });
+    });
+};
+//the animation loop
+ThreeJSWrapper.prototype.loop = function loop () {
+    requestAnimationFrame(this.loop.bind(this));
+    this.update();
+    this.renderer.render(this.scene, this.camera);
+};
+//resize the scene to the current canvas size
+ThreeJSWrapper.prototype.resize = function resize () {
+    this.fullscreen();
+    var ref = this.canvas;
         var width = ref.width;
         var height = ref.height;
-
-     this.dimensions.width = width;
-     this.dimensions.height = height;
-
-     this.camera.aspect = width / height;
-     this.camera.updateProjectionMatrix();
-        
-     this.renderer.setSize(width, height);
- };
-    
- //fullscreen the canvas
- ThreeJSWrapper.prototype.fullscreen = function fullscreen () {
-     this.canvas.style.width = '100%';
-	 this.canvas.style.height= '100%';
-	
-    	this.canvas.width  = this.canvas.offsetWidth;
-	 this.canvas.height = this.canvas.offsetHeight;
- };
-    
-//event listeners 
+    this.dimensions.width = width;
+    this.dimensions.height = height;
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height);
+};
+//fullscreen the canvas
+ThreeJSWrapper.prototype.fullscreen = function fullscreen () {
+    this.canvas.style.width = "100%";
+    this.canvas.style.height = "100%";
+    this.canvas.width = this.canvas.offsetWidth;
+    this.canvas.height = this.canvas.offsetHeight;
+};
+//event listeners
 ThreeJSWrapper.prototype.bindEventListeners = function bindEventListeners () {
-     window.onresize = this.resize.bind(this);
- };
-    
- //build our three js renderer
- ThreeJSWrapper.prototype.buildRenderer = function buildRenderer (ref) {
+    window.onresize = this.resize.bind(this);
+};
+//build our three js renderer
+ThreeJSWrapper.prototype.buildRenderer = function buildRenderer (ref) {
         var width = ref.width;
         var height = ref.height;
 
-     var renderer = new WebGLRenderer({canvas: this.canvas});
-     renderer.setSize(width,height);
-     return renderer;
- };
-    
- //build our camera
- ThreeJSWrapper.prototype.buildCamera = function buildCamera (ref) {
+    var renderer = new WebGLRenderer({ canvas: this.canvas });
+    renderer.setSize(width, height);
+    return renderer;
+};
+//build our camera
+ThreeJSWrapper.prototype.buildCamera = function buildCamera (ref) {
         var width = ref.width;
         var height = ref.height;
 
-     var fov = 75;
-     var aspect = width/height;
-     var near = 0.1;
-     var far = 1000;
-        
-     return new PerspectiveCamera(fov,aspect,near,far);
- };
+    var fov = 75;
+    var aspect = width / height;
+    var near = 0.1;
+    var far = 1000;
+    return new PerspectiveCamera(fov, aspect, near, far);
+};
 
 Object.defineProperties( ThreeJSWrapper, staticAccessors );
 
 //Entity base class
-var ThreeJSEntity = function ThreeJSEntity (params){
+var ThreeJSEntity = function ThreeJSEntity(params) {
     if ( params === void 0 ) params = {};
 
+    this.parms = params;
     this.THREE = ThreeJSWrapper.THREE;
-        
-    var Obj3d = this.create(params);
-        
-    Obj3d.addEventListener('update', this.update);
-
-    return Obj3d;
+    this.object3d = this.create();
+    this.object3d.addEventListener("update", this.update);
 };
-
 /**
- * Override to create entity obj3d
- * @abstract
- * @param {object} params
- * @return {Object3D}
+ * Override to create Object3D
  */
-ThreeJSEntity.prototype.create = function create (params) {
-        if ( params === void 0 ) params = {};
-
-    throw new Error('Entities must have a create method');
+ThreeJSEntity.prototype.create = function create () {
+    throw new Error("Entities must have a create method");
 };
-
 /**
  * Override to define animations
  */
-ThreeJSEntity.prototype.update = function update () {};
-;
+ThreeJSEntity.prototype.update = function update () { };
 
 export default ThreeJSWrapper;
 export { ThreeJSEntity };
