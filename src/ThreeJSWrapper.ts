@@ -21,13 +21,13 @@ export default class ThreeJSWrapper {
     };
 
     //camera
-    this.camera = this.buildCamera(this.dimensions);
+    this.camera = this.buildCamera();
 
     //scene
     this.scene = new THREE.Scene();
 
     //renderer
-    this.renderer = this.buildRenderer(this.dimensions);
+    this.renderer = this.buildRenderer();
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
   }
@@ -94,14 +94,16 @@ export default class ThreeJSWrapper {
   }
 
   //build our three js renderer
-  buildRenderer({ width, height }) {
+  buildRenderer(): THREE.WebGLRenderer {
+    let { width, height } = this.dimensions;
     let renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     renderer.setSize(width, height);
     return renderer;
   }
 
   //build our camera
-  buildCamera({ width, height }) {
+  buildCamera(): THREE.PerspectiveCamera {
+    let { width, height } = this.dimensions;
     let fov = 75;
     let aspect = width / height;
     let near = 0.1;

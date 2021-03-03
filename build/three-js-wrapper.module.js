@@ -50110,11 +50110,11 @@ var ThreeJSWrapper = function ThreeJSWrapper(canvas) {
         height: canvas.height,
     };
     //camera
-    this.camera = this.buildCamera(this.dimensions);
+    this.camera = this.buildCamera();
     //scene
     this.scene = new Scene();
     //renderer
-    this.renderer = this.buildRenderer(this.dimensions);
+    this.renderer = this.buildRenderer();
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 };
 
@@ -50170,19 +50170,19 @@ ThreeJSWrapper.prototype.bindEventListeners = function bindEventListeners () {
     window.onresize = this.resize.bind(this);
 };
 //build our three js renderer
-ThreeJSWrapper.prototype.buildRenderer = function buildRenderer (ref) {
+ThreeJSWrapper.prototype.buildRenderer = function buildRenderer () {
+    var ref = this.dimensions;
         var width = ref.width;
         var height = ref.height;
-
     var renderer = new WebGLRenderer({ canvas: this.canvas });
     renderer.setSize(width, height);
     return renderer;
 };
 //build our camera
-ThreeJSWrapper.prototype.buildCamera = function buildCamera (ref) {
+ThreeJSWrapper.prototype.buildCamera = function buildCamera () {
+    var ref = this.dimensions;
         var width = ref.width;
         var height = ref.height;
-
     var fov = 75;
     var aspect = width / height;
     var near = 0.1;
@@ -50196,7 +50196,7 @@ Object.defineProperties( ThreeJSWrapper, staticAccessors );
 var ThreeJSEntity = function ThreeJSEntity(params) {
     if ( params === void 0 ) params = {};
 
-    this.parms = params;
+    this.params = params;
     this.THREE = ThreeJSWrapper.THREE;
     this.object3d = this.create();
     this.object3d.addEventListener("update", this.update);

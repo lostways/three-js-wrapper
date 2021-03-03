@@ -9,11 +9,11 @@ interface Entity {
 //Entity base class
 export default class ThreeJSEntity implements Entity {
   public object3d: Object3D;
-  public parms: Object;
+  public params: Object;
   protected THREE: Object;
 
   constructor(params = {}) {
-    this.parms = params;
+    this.params = params;
     this.THREE = ThreeJSWrapper.THREE;
     this.object3d = this.create();
     this.object3d.addEventListener("update", this.update);
