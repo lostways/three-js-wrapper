@@ -1,26 +1,26 @@
 import { ThreeJSEntity } from '../../build/three-js-wrapper.module.js';
 
-//wireframe sphere
+//normal box
 export default class NormalBox extends ThreeJSEntity {
-    create (
-        {
+    create (){
+        const {
             width = 1,
             height = 1,
             depth = 1,
             x = 0,
             y = 0,
             z = 0,
-        } = {} 
-    ){
-        this.material = new this.THREE.MeshNormalMaterial();
-        this.geo = new this.THREE.BoxGeometry(width,height,depth);
-        this.obj3d = new this.THREE.Mesh(this.geo,this.material);
+        } = this.params;
 
-        this.obj3d.position.z = z;
-        this.obj3d.position.y = y;
-        this.obj3d.position.x = x;
+        let material = new this.THREE.MeshNormalMaterial();
+        let geo = new this.THREE.BoxGeometry(width,height,depth);
+        let obj3d = new this.THREE.Mesh(geo,material);
 
-        return this.obj3d;
+        obj3d.position.z = z;
+        obj3d.position.y = y;
+        obj3d.position.x = x;
+
+        return obj3d;
     }
 
     update () {
