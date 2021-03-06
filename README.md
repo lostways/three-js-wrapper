@@ -38,8 +38,9 @@ import { ThreeJSEntity } from '../../build/three-js-wrapper.module.js';
 
 //wireframe sphere
 export default class WireframeSphere extends ThreeJSEntity {
-    create (
-        {
+
+    create() {
+        const {
             x = 0,
             y = 0,
             z = 0,
@@ -47,17 +48,17 @@ export default class WireframeSphere extends ThreeJSEntity {
             segments = 16,
             rings = 16,
             color = 0xCC0000
-        } = {} 
-    ){
-        this.material = new this.THREE.MeshBasicMaterial( { wireframe: true, color: color } );
-        this.geo = new this.THREE.SphereGeometry(radius,segments,rings);
-        this.obj3d = new this.THREE.Mesh(this.geo,this.material);
+        } = this.params;
+      
+        let material = new this.THREE.MeshBasicMaterial( { wireframe: true, color: color } );
+        let geo = new this.THREE.SphereGeometry(radius,segments,rings);
+        let obj3d = new this.THREE.Mesh(geo,material);
 
-        this.obj3d.position.z = z;
-        this.obj3d.position.y = y;
-        this.obj3d.position.x = x;
+        obj3d.position.z = z;
+        obj3d.position.y = y;
+        obj3d.position.x = x;
 
-        return this.obj3d;
+        return obj3d;
     }
 
     update () {
