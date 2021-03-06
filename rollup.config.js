@@ -1,4 +1,3 @@
-import buble from '@rollup/plugin-buble';
 import resolve from '@rollup/plugin-node-resolve';
 import uglify from '@lopatnov/rollup-plugin-uglify';
 import typescript from '@rollup/plugin-typescript';
@@ -6,7 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 export default [
     {
         input: 'index.ts',
-        plugins: [typescript(),resolve(),buble()],
+        plugins: [typescript(),resolve()],
         treeshake: false,
         output: [
             {
@@ -18,7 +17,7 @@ export default [
     },
     {
         input: 'index.ts',
-        plugins: [typescript(),resolve(),buble()],
+        plugins: [typescript(),resolve()],
         treeshake: false,
         output: [
             {
@@ -31,7 +30,7 @@ export default [
     {
 
         input: 'index.ts',
-        plugins: [typescript(),resolve(),buble(),uglify()],
+        plugins: [typescript(),resolve(),uglify()],
         treeshake: false,
         output: [
             {
