@@ -106,5 +106,10 @@ All source files are located in the /src directory. Examples are in teh /example
 npm run build
 ```
 
+To view examples start server and then head to /examples
+```bash
+npm run serve
+```
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

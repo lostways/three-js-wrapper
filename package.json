@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "serve": "http-server"
   },
   "author": "lostways",
   "license": "MIT",
@@ -19,7 +20,9 @@
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/three": "^0.126.0",
+    "concurrently": "^6.0.0",
     "eslint": "^7.20.0",
+    "http-server": "^0.12.3",
     "rollup": "^2.0.0",
     "terser": "^4.8.0",
     "tslib": "^2.1.0",
