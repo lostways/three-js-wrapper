@@ -29,6 +29,7 @@ export default class ThreeJSWrapper {
     //renderer
     this.renderer = this.buildRenderer();
 
+    //controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
   }
 

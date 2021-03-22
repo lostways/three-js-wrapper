@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ThreeJS Wrapper Loag GLTF Model</title>
+    <style type="text/css">
+        html,body { overflow: hidden;margin: 0; width: 100%; height: 100%; }
+        canvas { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="module">
+        /**
+         * Example: Displays a rotating wireframe sphere
+         **/
+        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
+        import LoadGLTFModel from './entities/LoadGLTFModel.js';
+
+        let canvas = document.getElementById("canvas");
+        let wrapper = new ThreeJSWrapper(canvas);
+
+        //create entitites
+        let loadedModel = new LoadGLTFModel({url:"/examples/models/Flamingo.glb"});
+
+        //add enitities
+        wrapper.addEntity(loadedModel);
+
+        //position controls
+        wrapper.controls.target.set(0,0,-25);
+
+        //start wrapper 
+        wrapper.start();
+    </script>
+</body>
+
+</html>
