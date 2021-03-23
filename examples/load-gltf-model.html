@@ -22,17 +22,35 @@
         let canvas = document.getElementById("canvas");
         let wrapper = new ThreeJSWrapper(canvas);
 
+        const ambientLight = new ThreeJSWrapper.THREE.HemisphereLight(
+          'white',
+          'darkslategrey',
+          5,
+        );
+
+        const mainLight = new ThreeJSWrapper.THREE.DirectionalLight('white', 4);
+        mainLight.position.set(10, 10, 10);
+
+        wrapper.scene.add(ambientLight, mainLight);
+
+        wrapper.renderer.physicallyCorrectLights = true;
+        
         //create entitites
-        let loadedModel = new LoadGLTFModel({url:"/examples/models/Flamingo.glb"});
+        wrapper.loader.load("/examples/models/Parrot.glb", (model) => {
+          
+          console.log(model);
+          
+          let loadedModel = new LoadGLTFModel({model: model,z: -125});
 
-        //add enitities
-        wrapper.addEntity(loadedModel);
+          //add enitities
+          wrapper.addEntity(loadedModel);
 
-        //position controls
-        wrapper.controls.target.set(0,0,-25);
+          //position controls
+          wrapper.controls.target.set(0,0,-125);
 
-        //start wrapper 
-        wrapper.start();
+          //start wrapper 
+          wrapper.start();
+        });
     </script>
 </body>
 

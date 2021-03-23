@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import ThreeJSEntity from "./ThreeJSEntity";
 
 export default class ThreeJSWrapper {
@@ -9,6 +10,7 @@ export default class ThreeJSWrapper {
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
   public controls: OrbitControls;
+  public loader: GLTFLoader;
 
   constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -31,6 +33,9 @@ export default class ThreeJSWrapper {
 
     //controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    //loader
+    this.loader = new GLTFLoader();
   }
 
   //static THREE instance
