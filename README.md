@@ -106,7 +106,7 @@ All source files are located in the /src directory. Examples are in teh /example
 npm run build
 ```
 
-To view examples start server and then head to /examples
+Start sever to view examples
 ```bash
 npm run serve
 ```
