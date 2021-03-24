@@ -20,7 +20,6 @@
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/three": "^0.126.0",
-    "concurrently": "^6.0.0",
     "eslint": "^7.20.0",
     "http-server": "^0.12.3",
     "rollup": "^2.0.0",
