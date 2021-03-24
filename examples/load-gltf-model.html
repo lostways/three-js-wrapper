@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ThreeJS Wrapper Loag GLTF Model</title>
     <style type="text/css">
-        html,body { overflow: hidden;margin: 0; width: 100%; height: 100%; }
-        canvas { width: 100%; height: 100%; }
+      html,
+      body {
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="canvas"></canvas>
     <script type="module">
-        /**
-         * Example: Displays a rotating wireframe sphere
-         **/
-        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
-        import LoadGLTFModel from './entities/LoadGLTFModel.js';
+      /**
+       * Example: Loads a GLTF Model
+       **/
+      import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
+      import LoadGLTFModel from "./entities/LoadGLTFModel.js";
+      import AmbientAndSpotLight from "./entities/AmbientAndSpotLight.js";
 
-        let canvas = document.getElementById("canvas");
-        let wrapper = new ThreeJSWrapper(canvas);
+      let canvas = document.getElementById("canvas");
+      let wrapper = new ThreeJSWrapper(canvas);
 
-        const ambientLight = new ThreeJSWrapper.THREE.HemisphereLight(
-          'white',
-          'darkslategrey',
-          5,
-        );
+      let lights = new AmbientAndSpotLight();
+      wrapper.addEntity(lights);
 
-        const mainLight = new ThreeJSWrapper.THREE.DirectionalLight('white', 4);
-        mainLight.position.set(10, 10, 10);
+      wrapper.renderer.physicallyCorrectLights = true;
 
-        wrapper.scene.add(ambientLight, mainLight);
+      //position controls
+      wrapper.controls.target.set(0, 0, -125);
 
-        wrapper.renderer.physicallyCorrectLights = true;
-        
-        //create entitites
-        wrapper.loader.load("/examples/models/Parrot.glb", (model) => {
-          
-          console.log(model);
-          
-          let loadedModel = new LoadGLTFModel({model: model,z: -125});
+      //create entitites
+      wrapper.loader.load("/examples/models/Parrot.glb", (model) => {
+        console.log(model);
 
-          //add enitities
-          wrapper.addEntity(loadedModel);
+        let loadedModel = new LoadGLTFModel({ model: model, z: -125 });
 
-          //position controls
-          wrapper.controls.target.set(0,0,-125);
+        //add enitities
+        wrapper.addEntity(loadedModel);
 
-          //start wrapper 
-          wrapper.start();
-        });
+        //start wrapper
+        wrapper.start();
+      });
     </script>
-</body>
-
+  </body>
 </html>
