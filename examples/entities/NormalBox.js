@@ -23,8 +23,8 @@ export default class NormalBox extends ThreeJSEntity {
         return obj3d;
     }
 
-    update () {
-        this.rotation.y += .01;
-        this.rotation.x += .02;
+    update (event) {
+        event.target.rotation.y += .01;
+        event.target.rotation.x += .02;
     }
  };

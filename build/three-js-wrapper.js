@@ -54488,6 +54488,8 @@ class ThreeJSWrapper {
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         //loader
         this.loader = new GLTFLoader();
+        //clock
+        this.clock = new Clock();
     }
     //static THREE instance
     static get THREE() {
@@ -54506,8 +54508,9 @@ class ThreeJSWrapper {
     }
     //update the scene animation
     update() {
+        let delta = this.clock.getDelta();
         this.scene.children.forEach((ent) => {
-            ent.dispatchEvent({ type: "update" });
+            ent.dispatchEvent({ type: "update", delta: delta });
         });
     }
     //the animation loop
@@ -54561,7 +54564,7 @@ class ThreeJSEntity {
         this.params = params;
         this.THREE = ThreeJSWrapper.THREE;
         this.object3d = this.create();
-        this.object3d.addEventListener("update", this.update);
+        this.object3d.addEventListener("update", this.update.bind(this));
     }
     /**
      * Override to create Object3D

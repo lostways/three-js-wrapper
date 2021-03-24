@@ -25,7 +25,7 @@ export default class WireframeSphere extends ThreeJSEntity {
         return obj3d;
     }
 
-    update () {
-        this.rotation.y -= .005;
+    update (event) {
+        event.target.rotation.y -= .005;
     }
  };

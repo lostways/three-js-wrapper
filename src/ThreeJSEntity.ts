@@ -16,7 +16,7 @@ export default class ThreeJSEntity implements Entity {
     this.params = params;
     this.THREE = ThreeJSWrapper.THREE;
     this.object3d = this.create();
-    this.object3d.addEventListener("update", this.update);
+    this.object3d.addEventListener("update", this.update.bind(this));
   }
 
   /**

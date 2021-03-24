@@ -11,6 +11,7 @@ export default class ThreeJSWrapper {
   public renderer: THREE.WebGLRenderer;
   public controls: OrbitControls;
   public loader: GLTFLoader;
+  public clock: THREE.Clock;
 
   constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -36,6 +37,9 @@ export default class ThreeJSWrapper {
 
     //loader
     this.loader = new GLTFLoader();
+
+    //clock
+    this.clock = new THREE.Clock();
   }
 
   //static THREE instance
@@ -58,8 +62,9 @@ export default class ThreeJSWrapper {
 
   //update the scene animation
   update() {
+    let  delta = this.clock.getDelta();
     this.scene.children.forEach((ent) => {
-      ent.dispatchEvent({ type: "update" });
+      ent.dispatchEvent({ type: "update", delta: delta  });
     });
   }
 
