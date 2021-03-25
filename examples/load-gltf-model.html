@@ -26,7 +26,7 @@
        * Example: Loads a GLTF Model
        **/
       import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
-      import LoadGLTFModel from "./entities/LoadGLTFModel.js";
+      import GLTFModel from "./entities/GLTFModel.js";
       import AmbientAndSpotLight from "./entities/AmbientAndSpotLight.js";
 
       let canvas = document.getElementById("canvas");
@@ -35,19 +35,20 @@
       let lights = new AmbientAndSpotLight();
       wrapper.addEntity(lights);
 
+      //better lights
       wrapper.renderer.physicallyCorrectLights = true;
 
       //position controls
       wrapper.controls.target.set(0, 0, -125);
 
-      //create entitites
-      wrapper.loader.load("/examples/models/Parrot.glb", (model) => {
-        console.log(model);
+      //load model
+      let gltf = new GLTFModel({
+        z: -125,
+      });
 
-        let loadedModel = new LoadGLTFModel({ model: model, z: -125 });
-
-        //add enitities
-        wrapper.addEntity(loadedModel);
+      gltf.loadModel("/examples/models/Parrot.glb").then(() => {
+        //add enitity
+        wrapper.addEntity(gltf);
 
         //start wrapper
         wrapper.start();
