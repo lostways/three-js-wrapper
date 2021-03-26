@@ -1,13 +1,14 @@
-import { ThreeJSEntity } from "../../build/three-js-wrapper.module.js";
+import {
+  ThreeJSEntity,
+  GLTFLoader,
+} from "../../build/three-js-wrapper.module.js";
 
 //Load GLTF Model
 export default class GLTFModel extends ThreeJSEntity {
   create() {
-    const {
-      x = 0,
-      y = 0,
-      z = 0,
-    } = this.params;
+    const { x = 0, y = 0, z = 0 } = this.params;
+
+    this.loader = new GLTFLoader();
 
     this.x = x;
     this.y = y;

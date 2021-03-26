@@ -54559,7 +54559,6 @@ class ThreeJSEntity {
     constructor(params = {}) {
         this.params = params;
         this.THREE = ThreeJSWrapper.THREE;
-        this.loader = new GLTFLoader();
         this.object3d = this.create();
         this.object3d.addEventListener("update", this.update.bind(this));
     }
@@ -54576,4 +54575,4 @@ class ThreeJSEntity {
 }
 
 export default ThreeJSWrapper;
-export { ThreeJSEntity };
+export { GLTFLoader, ThreeJSEntity };
