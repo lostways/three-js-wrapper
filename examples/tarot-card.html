@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tarot Card</title>
+    <style type="text/css">
+      html,
+      body {
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script type="module">
+      /**
+       * Example: Displays a Tarot Card with textures
+       **/
+      import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
+      import TarotCard from "./entities/TarotCard.js";
+      import AmbientAndSpotLight from "./entities/AmbientAndSpotLight.js";
+
+      let canvas = document.getElementById("canvas");
+      let wrapper = new ThreeJSWrapper(canvas);
+
+      let lights = new AmbientAndSpotLight({spot: 3});
+      wrapper.addEntity(lights);
+      
+      let tarotCard = new TarotCard({z : -2.5});
+      wrapper.addEntity(tarotCard);
+
+      //better lights
+      wrapper.renderer.physicallyCorrectLights = true;
+
+      //position controls
+      wrapper.controls.target.set(0, 0, -2.5);
+
+      //load model
+      wrapper.start();
+    </script>
+  </body>
+</html>
