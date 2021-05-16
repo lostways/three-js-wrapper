@@ -1,6 +1,6 @@
 import { ThreeJSEntity } from "../../build/three-js-wrapper.module.js";
 
-//wireframe sphere
+//Text Canvas
 export default class TextCanvas extends ThreeJSEntity {
   create() {
     const {
