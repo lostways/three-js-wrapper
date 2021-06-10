@@ -31,15 +31,7 @@
 
       let canvas = document.getElementById("canvas");
       let wrapper = new ThreeJSWrapper(canvas);
-
       let lights = new AmbientAndSpotLight();
-      wrapper.addEntity(lights);
-
-      //better lights
-      wrapper.renderer.physicallyCorrectLights = true;
-
-      //position controls
-      wrapper.controls.target.set(0, 0, -125);
 
       //load model
       let gltf = new GLTFModel({
@@ -49,6 +41,15 @@
       gltf.loadModel("/examples/models/Parrot.glb").then(() => {
         //add enitity
         wrapper.addEntity(gltf);
+
+        //add lights
+        wrapper.addEntity(lights);
+
+        //better lights
+        wrapper.renderer.physicallyCorrectLights = true;
+
+        //position controls
+        wrapper.controls.target.set(0, 0, -125);
 
         //start wrapper
         wrapper.start();
