@@ -98,7 +98,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Start by installing dependencies
 ```bash
-npm install
+yarn install --dev
 ```
 
 All source files are located in the /src directory. Examples are in teh /examples directory. To build the source run:
@@ -108,7 +108,7 @@ npm run build
 
 Start sever to view examples
 ```bash
-npm run serve
+yarn serve
 ```
 
 ## License

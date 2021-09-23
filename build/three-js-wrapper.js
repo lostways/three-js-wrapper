@@ -54580,4 +54580,4 @@ class ThreeJSEntity {
 
 exports.GLTFLoader = GLTFLoader;
 exports.ThreeJSEntity = ThreeJSEntity;
-exports.default = ThreeJSWrapper;
+exports["default"] = ThreeJSWrapper;

@@ -54574,5 +54574,4 @@ class ThreeJSEntity {
     update() { }
 }
 
-export default ThreeJSWrapper;
-export { GLTFLoader, ThreeJSEntity };
+export { GLTFLoader, ThreeJSEntity, ThreeJSWrapper as default };
