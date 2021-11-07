@@ -51,18 +51,42 @@ nav a {
   grid-gap: 1rem;
   max-width: 1525px;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
-h1 {
+h1, h2 {
   color: var(--text-color);
   font-family: Arial;
   text-transform: uppercase;
   font-size: 4rem;
   font-style: italic;
-  text-align: left;
-  grid-area: 1 / 1;
+  justify-self: center;
 }
 
+h1 {
+  margin-bottom: 35px;
+}
+
+h2 {
+  font-size: 3em;
+  text-decoration: underline;
+}
+
+.intro {
+  color: var(--text-color);
+  font-size: 2em;
+  font-family: "Times New Roman", serif;
+  justify-self: center;
+  margin-bottom: 2em;
+}
+
+.intro p {
+  margin: 2px 0px;
+}
+
+.intro a {
+  color: var(--text-color);
+}
 
 .cards {
   display: grid;
@@ -105,7 +129,7 @@ h1 {
   margin: 0 auto;
 }
 
-.card h2 {
+.card h3 {
   color: var(--text-color);
   font-family: Arial;
   font-size: 1.5rem;
@@ -118,7 +142,7 @@ h1 {
 }
 
 @media (max-width: 620px) {
-  .card h2 {
+  .card h3 {
     writing-mode: horizontal-tb;
   }
 }
