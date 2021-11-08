@@ -133,16 +133,18 @@ h2 {
   color: var(--text-color);
   font-family: Arial;
   font-size: 1.5rem;
-  writing-mode: sideways-lr;
+  writing-mode: vertical-rl;
   margin: 0px;
   align-self: baseline;
   grid-area: 1 / 1;
   font-weight: bold;
   letter-spacing: 1px;
+  transform: rotate(-180deg);
 }
 
 @media (max-width: 620px) {
   .card h3 {
     writing-mode: horizontal-tb;
+    transform: none;
   }
 }
