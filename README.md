@@ -1,6 +1,8 @@
 # three.js wrapper
 
-Three.js wrapper provies a simple framework for using Three.js to add 3d objects and animations to your project.
+Three.js wrapper provies a simple lightweight framework for using Three.js to add 3d objects and animations to your project.
+
+https://threejswrapper.com/
 
 ## Installation
 
@@ -101,7 +103,7 @@ Start by installing dependencies
 yarn install --dev
 ```
 
-All source files are located in the /src directory. Examples are in teh /examples directory. To build the source run:
+All source files are located in the /src directory. Examples are in the /examples directory. To build the source run:
 ```bash
 npm run build
 ```
