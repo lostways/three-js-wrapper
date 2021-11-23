@@ -32,19 +32,60 @@
         let wrapper = new ThreeJSWrapper(canvas);
 
         //create entitites
-        let teapot = new UtahTeapot({z:-100});
+        let effectController;
+        let teapot;
+        let teapotZ = -100;
+        let segments = -1;
+        let shading = "smooth";
+
         let lights = new AmbientAndSpotLight({ambeint: 1, spot: .05});
+
 
         //add enitities
         wrapper.addEntity(lights);
-        wrapper.addEntity(teapot);
 
         //position controls
         wrapper.controls.target.set(0,0,-100);
 
-        //start wrapper 
         wrapper.start();
 
+        setupGui();
+        render(); 
+
+        function setupGui() {
+
+          effectController = {
+            newSegments: 15,
+            newShading: "smooth",
+          }
+
+          let h;
+          const gui = new dat.GUI();
+
+          //segments
+          gui.add( effectController, "newSegments", [ 2, 3, 4, 5, 6, 8, 10, 15, 20, 30, 40, 50 ] ).name( "Segments" ).onChange( render );
+
+          //sading
+          gui.add( effectController, "newShading", [ "wireframe", "flat", "smooth", "glossy"] ).name( "Shading" ).onChange( render )
+        }
+
+        function render() {
+
+          if (typeof teapot != "undefined") {
+            wrapper.removeEntity(teapot);
+          }
+          
+          if ( effectController.newSegments !== segments ||
+            effectController.newShading !== shading) {
+
+            segments = effectController.newSegments;
+            shading = effectController.newShading;
+
+          }
+
+          teapot = new UtahTeapot({z:teapotZ,segments:segments,shading});
+          wrapper.addEntity(teapot);
+        }
 
     </script>
 </body>
