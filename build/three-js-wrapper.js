@@ -54499,6 +54499,26 @@ class ThreeJSWrapper {
     addEntity(entity) {
         this.scene.add(entity.object3d);
     }
+    //remove en entity from the scene
+    removeEntity(entity) {
+        if (!(entity.object3d instanceof Object3D))
+            return;
+        let object3d = entity.object3d;
+        if (object3d instanceof Mesh) {
+            if (object3d.geometry) {
+                object3d.geometry.dispose();
+            }
+            if (object3d.material) {
+                if (object3d.material instanceof Array) {
+                    object3d.material.forEach(material => material.dispose());
+                }
+                else {
+                    object3d.material.dispose();
+                }
+            }
+        }
+        this.scene.remove(entity.object3d);
+    }
     //start the animation loop
     start() {
         this.resize();
