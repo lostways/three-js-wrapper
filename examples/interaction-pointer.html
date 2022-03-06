@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ThreeJS Wrapper Pointer Interaction</title>
+    <style type="text/css">
+        html,body { overflow: hidden;margin: 0; width: 100%; height: 100%; }
+        canvas { width: 100%; height: 100%; }
+    </style>
+    <link rel="stylesheet" href="/examples/app.css"/>
+</head>
+<body>
+    <nav>
+      <ul>
+        <li><a href="/">Back</a></li>
+        <li><a href="https://github.com/lostways/three-js-wrapper/blob/master/examples/interaction-pointer.html">View Code</a></li>
+      </ul>
+    </nav>
+    <canvas id="canvas"></canvas>
+    <script type="module">
+        /**
+         * Example: Change color of sphere when pointer is over it. 
+         **/
+
+        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
+        import WireframeSphere from './entities/WireframeSphere.js';
+
+        let canvas = document.getElementById("canvas");
+        let wrapper = new ThreeJSWrapper(canvas);
+
+        //create entitites
+        let sphere = new WireframeSphere({z:-25, color: "#FFFFFF"});
+
+        //add enitities
+        wrapper.addEntity(sphere);
+
+        //position controls
+        wrapper.controls.target.set(0,0,-25);
+
+        //start wrapper 
+        wrapper.start();
+
+        //add event listener for pointer
+        window.addEventListener('pointermove', onPointerMove, false);
+
+        //setup raycaster and pointer vector
+        let raycaster = new ThreeJSWrapper.THREE.Raycaster();
+        let pointer = new ThreeJSWrapper.THREE.Vector2();
+
+        //update the pointer vetor based on mouse position
+        function updatePointerVector(event) {
+          pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+          pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        //check to see if mouse vetor intersects given object
+        function raycast(object3d) {
+          raycaster.setFromCamera(pointer, wrapper.camera);
+          let intersects = raycaster.intersectObject(object3d);
+          if ( intersects.length > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        function onPointerMove(event) {
+          updatePointerVector(event);
+          if (raycast(sphere.object3d)) {
+            sphere.object3d.material.color.set(0x00CC00);
+          } else {
+            sphere.object3d.material.color.set(0xFFFFFF);
+          }
+        }
+    </script>
+</body>
+
+</html>
