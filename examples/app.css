@@ -44,7 +44,7 @@ nav a {
   font-size: 1rem;
 }
 
-.main {
+.main:not(.dg) {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -147,4 +147,9 @@ h2 {
     writing-mode: horizontal-tb;
     transform: none;
   }
+}
+
+/** dat.gui styles **/
+.dg.ac {
+  top: 3rem !important;
 }
