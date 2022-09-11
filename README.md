@@ -105,7 +105,7 @@ yarn install --dev
 
 All source files are located in the /src directory. Examples are in the /examples directory. To build the source run:
 ```bash
-npm run build
+yarn build
 ```
 
 Start sever to view examples
