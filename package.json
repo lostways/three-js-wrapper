@@ -1,6 +1,6 @@
 {
   "name": "three-js-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Wrapper for three.js",
   "main": "build/three-js-wrapper.js",
   "module": "build/three-js-wrapper.module.js",
