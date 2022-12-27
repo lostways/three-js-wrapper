@@ -56240,6 +56240,9 @@ function toTrianglesDrawMode( geometry, drawMode ) {
 
 class ThreeJSWrapper {
     constructor(canvas) {
+        if (!(canvas && typeof canvas === 'object')) {
+            throw new Error("canvas is required to construct wrapper");
+        }
         //canvas
         this.canvas = canvas;
         //dimensions

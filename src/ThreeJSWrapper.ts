@@ -14,6 +14,10 @@ export default class ThreeJSWrapper {
   public clock: THREE.Clock;
 
   constructor(canvas: HTMLCanvasElement) {
+    if (!(canvas && typeof canvas === 'object')) {
+      throw new Error("canvas is required to construct wrapper");
+    }
+
     //canvas
     this.canvas = canvas;
 
