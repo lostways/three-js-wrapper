@@ -22,7 +22,7 @@
     "@types/three": "^0.126.0",
     "dat.gui": "^0.7.7",
     "eslint": "^7.20.0",
-    "http-server": "^0.12.3",
+    "http-server": "^14.1.1",
     "rollup": "^2.0.0",
     "rollup-pluginutils": "^2.8.2",
     "terser": "^4.8.0",
