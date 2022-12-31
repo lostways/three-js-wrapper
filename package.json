@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "test": "echo \"Error: no test specified\"",
+    "test": "node test/test-server.js",
     "serve": "http-server"
   },
   "author": "lostways",
@@ -21,10 +21,11 @@
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/three": "^0.126.0",
     "canvas": "^2.11.0",
+    "chai": "^4.3.7",
     "dat.gui": "^0.7.7",
     "eslint": "^7.20.0",
     "http-server": "^14.1.1",
-    "jsdom": "^20.0.3",
+    "live-server": "^1.2.2",
     "mocha": "^10.2.0",
     "rollup": "^2.0.0",
     "rollup-pluginutils": "^2.8.2",
