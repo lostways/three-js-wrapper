@@ -1,11 +1,23 @@
-import ThreeJSWrapper from '/build/three-js-wrapper.module.js';
+import ThreeJSWrapper from '../src/ThreeJSWrapper';
+import { assert } from 'chai';
 
-let assert = chai.assert;
-const testCanvas = document.getElementById("test-canvas");
+let testCanvas : HTMLCanvasElement;
+
+before(() => {
+    testCanvas = document.createElement('canvas');
+    testCanvas.width = 100;
+    testCanvas.height = 100;
+    document.body.appendChild(testCanvas);
+});
+
+after(() => {
+    document.body.removeChild(testCanvas);
+});
 
 describe('ThreeJSWrapper', () => {
     it('should check that canvas is set', () => {
         assert.throws(() => {
+            // @ts-expect-error
             let threeJsWrapper = new ThreeJSWrapper('hello');
         }, 'canvas is required to construct wrapper');
     });
