@@ -1,5 +1,6 @@
 import THREE from "./WrappedThree";
 import ThreeJSEntity from "./ThreeJSEntity";
+import { Object3D } from "three";
 
 export default class ThreeJSWrapper {
   public canvas: HTMLCanvasElement;
@@ -56,22 +57,28 @@ export default class ThreeJSWrapper {
 
   //remove en entity from the scene
   removeEntity(entity: ThreeJSEntity) {
-    if (!(entity.object3d instanceof THREE.Object3D)) return;
+    if (!(entity && typeof entity === 'object' && entity.object3d instanceof THREE.Object3D)) {
+      throw new Error("Can't remove invalid ThreeJSEntity")
+    }
+
+    if (!this.scene.children.includes(entity.object3d)) {
+      throw new Error("Can't remove entity that is not in scene");
+    }
 
     let object3d = entity.object3d;
 
     if (object3d instanceof THREE.Mesh) {
 
       if (object3d.geometry) {
-          object3d.geometry.dispose();
+        object3d.geometry.dispose();
       }
 
       if (object3d.material) {
-          if (object3d.material instanceof Array) {
-              object3d.material.forEach(material => material.dispose());
-          } else {
-              object3d.material.dispose();
-          }
+        if (object3d.material instanceof Array) {
+          object3d.material.forEach(material => material.dispose());
+        } else {
+          object3d.material.dispose();
+        }
       }
 
     }
@@ -89,9 +96,9 @@ export default class ThreeJSWrapper {
 
   //update the scene animation
   update() {
-    let  delta = this.clock.getDelta();
+    let delta = this.clock.getDelta();
     this.scene.children.forEach((ent) => {
-      ent.dispatchEvent({ type: "update", delta: delta  });
+      ent.dispatchEvent({ type: "update", delta: delta });
     });
   }
 

@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       '../src/*.ts',
+      '../test/entities/*.ts',
       '../test/test.ts',
     ],
 
@@ -29,6 +30,7 @@ module.exports = function(config) {
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
       "../src/**/*.ts": ["karma-typescript"],
+      "../test/entities/*.ts": ["karma-typescript"],
       "../test/test.ts": ["karma-typescript"]
     },
 
@@ -36,7 +38,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['mocha'],
+    reporters: ['karma-typescript', 'mocha'],
 
 
     // web server port
