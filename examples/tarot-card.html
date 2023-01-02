@@ -18,13 +18,18 @@
         height: 100%;
       }
     </style>
-    <link rel="stylesheet" href="/examples/app.css"/>
+    <link rel="stylesheet" href="/examples/app.css" />
   </head>
   <body>
     <nav>
       <ul>
         <li><a href="/">Back</a></li>
-        <li><a href="https://github.com/lostways/three-js-wrapper/blob/master/examples/tarot-card.html">View Code</a></li>
+        <li>
+          <a
+            href="https://github.com/lostways/three-js-wrapper/blob/master/examples/tarot-card.html"
+            >View Code</a
+          >
+        </li>
       </ul>
     </nav>
     <canvas id="canvas"></canvas>
@@ -39,10 +44,10 @@
       let canvas = document.getElementById("canvas");
       let wrapper = new ThreeJSWrapper(canvas);
 
-      let lights = new AmbientAndSpotLight({spot: 3});
+      let lights = new AmbientAndSpotLight({ spot: 3 });
       wrapper.addEntity(lights);
-      
-      let tarotCard = new TarotCard({z : -2.5});
+
+      let tarotCard = new TarotCard({ z: -2.5 });
       wrapper.addEntity(tarotCard);
 
       //better lights

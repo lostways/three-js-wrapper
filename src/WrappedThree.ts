@@ -4,14 +4,14 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // create type for our wrapped THREE instance
 type WrappedThree = typeof SUPER_THREE & {
-    OrbitControls: typeof OrbitControls;
-    GLTFLoader: typeof GLTFLoader;
+  OrbitControls: typeof OrbitControls;
+  GLTFLoader: typeof GLTFLoader;
 };
 
 // Create our wrapped THREE instance
 const WrappedThree = Object.assign({}, SUPER_THREE, {
-    OrbitControls,
-    GLTFLoader,
+  OrbitControls,
+  GLTFLoader,
 });
 
 // Export our wrapped THREE instance

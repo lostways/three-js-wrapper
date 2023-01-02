@@ -39,9 +39,17 @@ export default class Globe extends ThreeJSEntity {
       map: cloudsMap,
     });
 
-    const geometry = new this.THREE.SphereGeometry(0.5, 14, 14).translate(0, 0.1, 0);
+    const geometry = new this.THREE.SphereGeometry(0.5, 14, 14).translate(
+      0,
+      0.1,
+      0
+    );
     const earth = new this.THREE.Mesh(geometry, materialEarth);
-    const cloudGeometry = new this.THREE.SphereGeometry(0.55, 14, 14).translate(0, 0.1, 0);
+    const cloudGeometry = new this.THREE.SphereGeometry(0.55, 14, 14).translate(
+      0,
+      0.1,
+      0
+    );
     const clouds = new this.THREE.Mesh(cloudGeometry, materialClouds);
 
     this.object3d.add(earth);

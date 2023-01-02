@@ -9,6 +9,7 @@
     "url": "https://github.com/lostways/three-js-wrapper"
   },
   "scripts": {
+    "format": "prettier --write index.ts src test examples",
     "build": "rollup -c rollup.config.js",
     "test": "karma start test/karma.conf.js",
     "serve": "http-server"
@@ -33,6 +34,7 @@
     "karma-typescript": "^5.5.3",
     "karma-typescript-es6-transform": "^5.5.3",
     "mocha": "^10.2.0",
+    "prettier": "^2.8.1",
     "rollup": "^2.0.0",
     "rollup-pluginutils": "^2.8.2",
     "terser": "^4.8.0",

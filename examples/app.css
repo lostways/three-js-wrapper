@@ -9,7 +9,6 @@ body {
   background-color: #000000;
 }
 
-
 nav {
   position: absolute;
   right: 20px;
@@ -25,7 +24,7 @@ nav li {
   padding: 0px 10px;
   border-right: var(--border);
   border-bottom: var(--border);
-  border-top: var(--border); 
+  border-top: var(--border);
   border-left: var(--border);
 }
 
@@ -54,7 +53,8 @@ nav a {
   padding: 0 10px;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: var(--text-color);
   font-family: Arial;
   text-transform: uppercase;
@@ -91,14 +91,14 @@ h2 {
 .cards {
   display: grid;
   margin: 0 auto;
-  grid-template-columns: repeat(3, minmax(300px,max-content));
+  grid-template-columns: repeat(3, minmax(300px, max-content));
   grid-template-rows: auto;
   grid-gap: 1rem;
 }
 
 @media (max-width: 960px) {
   .cards {
-    grid-template-columns: repeat(auto-fill,minmax(300px,max-content));
+    grid-template-columns: repeat(auto-fill, minmax(300px, max-content));
   }
 }
 
@@ -112,8 +112,7 @@ h2 {
 
 .card:hover {
   transform: scale(1.025);
-  transition: all .2s ease-in-out;
-
+  transition: all 0.2s ease-in-out;
 }
 
 .card a {

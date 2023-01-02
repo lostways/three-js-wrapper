@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ThreeJS Wrapper Wireframe Sphere</title>
     <style type="text/css">
-        html,body { overflow: hidden;margin: 0; width: 100%; height: 100%; }
-        canvas { width: 100%; height: 100%; }
+      html,
+      body {
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
     </style>
-    <link rel="stylesheet" href="/examples/app.css"/>
-</head>
-<body>
+    <link rel="stylesheet" href="/examples/app.css" />
+  </head>
+  <body>
     <nav>
       <ul>
         <li><a href="/">Back</a></li>
-        <li><a href="https://github.com/lostways/three-js-wrapper/blob/master/examples/wireframe-sphere.html">View Code</a></li>
+        <li>
+          <a
+            href="https://github.com/lostways/three-js-wrapper/blob/master/examples/wireframe-sphere.html"
+            >View Code</a
+          >
+        </li>
       </ul>
     </nav>
     <canvas id="canvas"></canvas>
     <script type="module">
-        /**
-         * Example: Displays a rotating wireframe sphere
-         **/
-        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
-        import WireframeSphere from './entities/WireframeSphere.js';
+      /**
+       * Example: Displays a rotating wireframe sphere
+       **/
+      import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
+      import WireframeSphere from "./entities/WireframeSphere.js";
 
-        let canvas = document.getElementById("canvas");
-        let wrapper = new ThreeJSWrapper(canvas);
+      let canvas = document.getElementById("canvas");
+      let wrapper = new ThreeJSWrapper(canvas);
 
-        //create entitites
-        let sphere = new WireframeSphere({z:-25});
+      //create entitites
+      let sphere = new WireframeSphere({ z: -25 });
 
-        //add enitities
-        wrapper.addEntity(sphere);
+      //add enitities
+      wrapper.addEntity(sphere);
 
-        //position controls
-        wrapper.controls.target.set(0,0,-25);
+      //position controls
+      wrapper.controls.target.set(0, 0, -25);
 
-        //start wrapper 
-        wrapper.start();
+      //start wrapper
+      wrapper.start();
     </script>
-</body>
-
+  </body>
 </html>
