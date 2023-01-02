@@ -10,6 +10,7 @@ export default class ThreeJSWrapper {
   public controls: InstanceType<typeof THREE.OrbitControls>;
   public loader: InstanceType<typeof THREE.GLTFLoader>;
   public clock: THREE.Clock;
+  public isRunning: boolean = false;
 
   constructor(canvas: HTMLCanvasElement) {
     if (!(canvas && typeof canvas === "object")) {
@@ -98,6 +99,7 @@ export default class ThreeJSWrapper {
     this.bindEventListeners();
     this.renderer.render(this.scene, this.camera);
     this.loop();
+    this.isRunning = true;
   }
 
   //update the scene animation

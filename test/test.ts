@@ -6,6 +6,19 @@ import { assert } from "chai";
 let testCanvas: HTMLCanvasElement;
 let threeJsWrapper: ThreeJSWrapper;
 
+before(() => {
+  const style = document.createElement("style");
+  style.innerHTML = `
+    html,body {
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+  `;
+  document.head.appendChild(style);
+});
+
 beforeEach(() => {
   testCanvas = document.createElement("canvas");
   testCanvas.width = 100;
@@ -99,11 +112,116 @@ describe("ThreeJSWrapper", () => {
     }, "Can't remove entity that is not in scene");
   });
 
+  it("should start", () => {
+    assert.equal(threeJsWrapper.isRunning, false);
+    threeJsWrapper.start();
+    assert.equal(threeJsWrapper.isRunning, true);
+  });
+
+  it("should fullscreen canvas", () => {
+    // assert that canvas is not fullscreen
+    assert.equal(threeJsWrapper.canvas.width, 100);
+    assert.equal(threeJsWrapper.canvas.height, 100);
+
+    // fullscreen canvas
+    threeJsWrapper.fullscreen();
+
+    // assert that canvas is fullscreen
+    assert.equal(threeJsWrapper.canvas.width, window.innerWidth);
+    assert.equal(threeJsWrapper.canvas.height, window.innerHeight);
+  });
+
+  it("should resize the scene", () => {
+    // assert that canvas is not fullscreen
+    assert.equal(threeJsWrapper.canvas.width, 100);
+    assert.equal(threeJsWrapper.canvas.height, 100);
+
+    // assert that camera aspect is not fullscreen
+    assert.notEqual(
+      threeJsWrapper.camera.aspect,
+      window.innerWidth / window.innerHeight
+    );
+
+    // assert that renderer is not fullscreen
+    assert.equal(threeJsWrapper.renderer.domElement.width, 100);
+    assert.equal(threeJsWrapper.renderer.domElement.height, 100);
+
+    // resize the scene
+    threeJsWrapper.resize();
+
+    // assert that canvas is fullscreen
+    assert.equal(threeJsWrapper.canvas.width, window.innerWidth);
+    assert.equal(threeJsWrapper.canvas.height, window.innerHeight);
+
+    // assert that camera is fullscreen
+    assert.equal(
+      threeJsWrapper.camera.aspect,
+      window.innerWidth / window.innerHeight
+    );
+
+    // assert that renderer is fullscreen
+    assert.equal(
+      threeJsWrapper.renderer.domElement.width,
+      window.document.body.offsetWidth
+    );
+    assert.equal(
+      threeJsWrapper.renderer.domElement.height,
+      window.document.body.offsetHeight
+    );
+  });
+
+  it("should resize the scene when window is resized", () => {
+    // bind resize event
+    threeJsWrapper.bindEventListeners();
+
+    // assert that canvas is not fullscreen
+    assert.equal(threeJsWrapper.canvas.width, 100);
+    assert.equal(threeJsWrapper.canvas.height, 100);
+
+    // assert that camera aspect is not fullscreen
+    assert.notEqual(
+      threeJsWrapper.camera.aspect,
+      window.innerWidth / window.innerHeight
+    );
+
+    // assert that renderer is not fullscreen
+    assert.equal(threeJsWrapper.renderer.domElement.width, 100);
+    assert.equal(threeJsWrapper.renderer.domElement.height, 100);
+
+    // resize the scene
+    window.dispatchEvent(new Event("resize"));
+
+    // assert that canvas is fullscreen
+    assert.equal(threeJsWrapper.canvas.width, window.innerWidth);
+    assert.equal(threeJsWrapper.canvas.height, window.innerHeight);
+
+    // assert that camera is fullscreen
+    assert.equal(
+      threeJsWrapper.camera.aspect,
+      window.innerWidth / window.innerHeight
+    );
+
+    // assert that renderer is fullscreen
+    assert.equal(
+      threeJsWrapper.renderer.domElement.width,
+      window.document.body.offsetWidth
+    );
+    assert.equal(
+      threeJsWrapper.renderer.domElement.height,
+      window.document.body.offsetHeight
+    );
+  });
+
   /**
-    it('should start animation loop', () => {
-        assert.equal(threeJsWrapper.isRunning, false);
-        threeJsWrapper.start();
-        assert.equal(threeJsWrapper.isRunning, true);
-    });
-    **/
+  it("should render the scene", () => {
+    // assert that scene has not been rendered
+    assert.equal(threeJsWrapper.renderer.state, undefined);
+
+    // render the scene
+    threeJsWrapper.renderer.render(threeJsWrapper.scene,threeJsWrapper.camera);
+
+    // assert that scene has been rendered
+    assert.equal(threeJsWrapper.renderer.state, "rendered");
+  });
+  **/
 });
