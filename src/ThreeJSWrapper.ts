@@ -1,6 +1,5 @@
 import THREE from "./WrappedThree";
 import ThreeJSEntity from "./ThreeJSEntity";
-import { Object3D } from "three";
 
 export default class ThreeJSWrapper {
   public canvas: HTMLCanvasElement;
