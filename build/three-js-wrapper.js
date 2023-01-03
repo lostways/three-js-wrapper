@@ -56243,11 +56243,15 @@ function toTrianglesDrawMode( geometry, drawMode ) {
 }
 
 // Create our wrapped THREE instance
-const WrappedThree = Object.assign({}, SUPER_THREE, { OrbitControls, GLTFLoader });
+const WrappedThree = Object.assign({}, SUPER_THREE, {
+    OrbitControls,
+    GLTFLoader,
+});
 
 class ThreeJSWrapper {
     constructor(canvas) {
-        if (!(canvas && typeof canvas === 'object')) {
+        this.isRunning = false;
+        if (!(canvas && typeof canvas === "object")) {
             throw new Error("canvas is required to construct wrapper");
         }
         //canvas
@@ -56280,7 +56284,9 @@ class ThreeJSWrapper {
     }
     //remove en entity from the scene
     removeEntity(entity) {
-        if (!(entity && typeof entity === 'object' && entity.object3d instanceof WrappedThree.Object3D)) {
+        if (!(entity &&
+            typeof entity === "object" &&
+            entity.object3d instanceof WrappedThree.Object3D)) {
             throw new Error("Can't remove invalid ThreeJSEntity");
         }
         if (!this.scene.children.includes(entity.object3d)) {
@@ -56293,7 +56299,7 @@ class ThreeJSWrapper {
             }
             if (object3d.material) {
                 if (object3d.material instanceof Array) {
-                    object3d.material.forEach(material => material.dispose());
+                    object3d.material.forEach((material) => material.dispose());
                 }
                 else {
                     object3d.material.dispose();
@@ -56306,8 +56312,13 @@ class ThreeJSWrapper {
     start() {
         this.resize();
         this.bindEventListeners();
-        this.renderer.render(this.scene, this.camera);
+        this.render();
         this.loop();
+        this.isRunning = true;
+    }
+    //render the scene
+    render() {
+        this.renderer.render(this.scene, this.camera);
     }
     //update the scene animation
     update() {
@@ -56320,7 +56331,7 @@ class ThreeJSWrapper {
     loop() {
         requestAnimationFrame(this.loop.bind(this));
         this.update();
-        this.renderer.render(this.scene, this.camera);
+        this.render();
     }
     //resize the scene to the current canvas size
     resize() {
