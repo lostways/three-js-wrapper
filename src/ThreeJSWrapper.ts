@@ -97,9 +97,14 @@ export default class ThreeJSWrapper {
   start() {
     this.resize();
     this.bindEventListeners();
-    this.renderer.render(this.scene, this.camera);
+    this.render();
     this.loop();
     this.isRunning = true;
+  }
+
+  //render the scene
+  render() {
+    this.renderer.render(this.scene, this.camera);
   }
 
   //update the scene animation
@@ -114,7 +119,7 @@ export default class ThreeJSWrapper {
   loop() {
     requestAnimationFrame(this.loop.bind(this));
     this.update();
-    this.renderer.render(this.scene, this.camera);
+    this.render();
   }
 
   //resize the scene to the current canvas size

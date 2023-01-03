@@ -1,6 +1,7 @@
 import ThreeJSWrapper from "../src/ThreeJSWrapper";
 import ThreeJSEntity from "../src/ThreeJSEntity";
 import TestEntity from "./entities/TestEntity";
+import * as sinon from "sinon";
 import { assert } from "chai";
 
 let testCanvas: HTMLCanvasElement;
@@ -30,6 +31,7 @@ beforeEach(() => {
 
 afterEach(() => {
   document.body.removeChild(testCanvas);
+  sinon.restore();
 });
 
 describe("ThreeJSWrapper", () => {
@@ -83,42 +85,8 @@ describe("ThreeJSWrapper", () => {
     assert.instanceOf(threeJsWrapper.clock, ThreeJSWrapper.THREE.Clock);
   });
 
-  it("should add entity to scene", () => {
-    let entity: ThreeJSEntity = new TestEntity({});
-    assert.equal(threeJsWrapper.scene.children.length, 0);
-    threeJsWrapper.addEntity(entity);
-    assert.equal(threeJsWrapper.scene.children.length, 1);
-  });
 
-  it("should remove entity from scene", () => {
-    let entity: ThreeJSEntity = new TestEntity({});
-    threeJsWrapper.addEntity(entity);
-    assert.equal(threeJsWrapper.scene.children.length, 1);
-    threeJsWrapper.removeEntity(entity);
-    assert.equal(threeJsWrapper.scene.children.length, 0);
-  });
-
-  it("should throw error when removing invalid entity", () => {
-    assert.throws(() => {
-      // @ts-expect-error
-      threeJsWrapper.removeEntity("hello");
-    }, "Can't remove invalid ThreeJSEntity");
-  });
-
-  it("should throw error when removing entity that is not in scene", () => {
-    assert.throws(() => {
-      let entity: ThreeJSEntity = new TestEntity({});
-      threeJsWrapper.removeEntity(entity);
-    }, "Can't remove entity that is not in scene");
-  });
-
-  it("should start", () => {
-    assert.equal(threeJsWrapper.isRunning, false);
-    threeJsWrapper.start();
-    assert.equal(threeJsWrapper.isRunning, true);
-  });
-
-  it("should fullscreen canvas", () => {
+  it("should fullscreen canvas when fullscreen is called", () => {
     // assert that canvas is not fullscreen
     assert.equal(threeJsWrapper.canvas.width, 100);
     assert.equal(threeJsWrapper.canvas.height, 100);
@@ -131,7 +99,7 @@ describe("ThreeJSWrapper", () => {
     assert.equal(threeJsWrapper.canvas.height, window.innerHeight);
   });
 
-  it("should resize the scene", () => {
+  it("should resize the scene when resize is called", () => {
     // assert that canvas is not fullscreen
     assert.equal(threeJsWrapper.canvas.width, 100);
     assert.equal(threeJsWrapper.canvas.height, 100);
@@ -212,16 +180,88 @@ describe("ThreeJSWrapper", () => {
     );
   });
 
-  /**
-  it("should render the scene", () => {
-    // assert that scene has not been rendered
-    assert.equal(threeJsWrapper.renderer.state, undefined);
+  it("should start", () => {
+    const resizeSpy = sinon.spy(threeJsWrapper, "resize");
+    const bindEventsSpy = sinon.spy(threeJsWrapper, "bindEventListeners");
+    const renderSpy = sinon.spy(threeJsWrapper, "render");
+    const loopSpy = sinon.spy(threeJsWrapper, "loop");
 
-    // render the scene
-    threeJsWrapper.renderer.render(threeJsWrapper.scene,threeJsWrapper.camera);
+    // assert that isRunning is false
+    assert.equal(threeJsWrapper.isRunning, false);
 
-    // assert that scene has been rendered
-    assert.equal(threeJsWrapper.renderer.state, "rendered");
+    // start
+    threeJsWrapper.start();
+
+    // assert that resize is called
+    assert.equal(resizeSpy.callCount, 1);
+
+    // assert that bindEvents is called
+    assert.equal(bindEventsSpy.callCount, 1);
+
+    // assert that render is called twice
+    assert.equal(renderSpy.callCount, 2);
+
+    // assert that loop is called
+    assert.equal(loopSpy.callCount, 1);
+
+    // assert that isRunning is true
+    assert.equal(threeJsWrapper.isRunning, true);
   });
-  **/
+
+  it("should add entity to scene", () => {
+    const entity: ThreeJSEntity = new TestEntity({});
+
+    assert.equal(threeJsWrapper.scene.children.length, 0);
+
+    threeJsWrapper.addEntity(entity);
+    assert.equal(threeJsWrapper.scene.children.length, 1);
+  });
+
+  it("should remove entity from scene", () => {
+    const entity: ThreeJSEntity = new TestEntity({});
+
+    threeJsWrapper.addEntity(entity);
+    assert.equal(threeJsWrapper.scene.children.length, 1);
+
+    threeJsWrapper.removeEntity(entity);
+    assert.equal(threeJsWrapper.scene.children.length, 0);
+  });
+
+  it("should throw error when removing invalid entity", () => {
+    assert.throws(() => {
+      // @ts-expect-error
+      threeJsWrapper.removeEntity("hello");
+    }, "Can't remove invalid ThreeJSEntity");
+  });
+
+  it("should throw error when removing entity that is not in scene", () => {
+    assert.throws(() => {
+      const entity: ThreeJSEntity = new TestEntity({});
+      threeJsWrapper.removeEntity(entity);
+    }, "Can't remove entity that is not in scene");
+  });
+
+  it("should call update on all entities when update is called", () => {
+    const updateSpy = sinon.spy(TestEntity.prototype, "update");
+    const entity: ThreeJSEntity = new TestEntity({});
+
+    threeJsWrapper.addEntity(entity);
+    threeJsWrapper.update();
+
+    assert.equal(updateSpy.callCount, 1);
+    assert.equal(updateSpy.firstCall.args[0].type, "update");
+    assert.equal(updateSpy.firstCall.args[0].delta, 0);
+  });
+
+  it("should start the animation loop when loop is called", () => {
+    const renderSpy = sinon.spy(threeJsWrapper, "render");
+    const updateSpy = sinon.spy(threeJsWrapper, "update");
+    const animationFrameSpy = sinon.spy(window, "requestAnimationFrame");
+
+    threeJsWrapper.loop();
+
+    assert.equal(animationFrameSpy.callCount, 1);
+    assert.equal(updateSpy.callCount, 1);
+    assert.equal(renderSpy.callCount, 1);
+  });
 });
