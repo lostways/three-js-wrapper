@@ -85,7 +85,6 @@ describe("ThreeJSWrapper", () => {
     assert.instanceOf(threeJsWrapper.clock, ThreeJSWrapper.THREE.Clock);
   });
 
-
   it("should fullscreen canvas when fullscreen is called", () => {
     // assert that canvas is not fullscreen
     assert.equal(threeJsWrapper.canvas.width, 100);
