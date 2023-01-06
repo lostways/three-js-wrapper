@@ -2,7 +2,6 @@ import ThreeJSEntity from "../src/ThreeJSEntity";
 import TestEntity from "./entities/TestEntity";
 import WrappedThree from "../src/WrappedThree";
 import { assert } from "chai";
-import { Object3D } from "three";
 import * as sinon from "sinon";
 
 before(() => {});
@@ -14,6 +13,11 @@ afterEach(() => {
 });
 
 describe("ThreeJSEntity", () => {
+  it("should be an instance of ThreeJSEntity", () => {
+    let entity = new TestEntity();
+    assert.instanceOf(entity, ThreeJSEntity);
+  });
+
   it("should set params", () => {
     let entity = new TestEntity({ foo: "bar" });
     assert.equal(entity.params["foo"], "bar");
@@ -21,7 +25,7 @@ describe("ThreeJSEntity", () => {
 
   it("should create an Object3D", () => {
     let entity = new TestEntity();
-    assert.instanceOf(entity.object3d, Object3D);
+    assert.instanceOf(entity.object3d, WrappedThree.Object3D);
     assert.equal(entity.object3d.name, "TestEntity");
   });
 
