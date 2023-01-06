@@ -8,8 +8,7 @@ before(() => {});
 
 beforeEach(() => {});
 
-afterEach(() => {
-});
+afterEach(() => {});
 
 describe("WrappedThree", () => {
   it("should have Object3D", () => {
