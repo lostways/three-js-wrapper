@@ -12,7 +12,7 @@ module.exports = function (config) {
     frameworks: ["mocha", "karma-typescript"],
 
     // list of files / patterns to load in the browser
-    files: ["../src/*.ts", "../test/entities/*.ts", "../test/test.ts"],
+    files: ["../src/*.ts", "../test/entities/*.ts", "../test/*.ts"],
 
     // list of files / patterns to exclude
     exclude: [],
@@ -22,7 +22,7 @@ module.exports = function (config) {
     preprocessors: {
       "../src/**/*.ts": ["karma-typescript"],
       "../test/entities/*.ts": ["karma-typescript"],
-      "../test/test.ts": ["karma-typescript"],
+      "../test/*.ts": ["karma-typescript"],
     },
 
     // test results reporter to use
