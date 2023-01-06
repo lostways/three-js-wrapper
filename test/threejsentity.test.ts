@@ -16,7 +16,7 @@ afterEach(() => {
 describe("ThreeJSEntity", () => {
   it("should set params", () => {
     let entity = new TestEntity({ foo: "bar" });
-    assert.equal(entity.params['foo'], "bar");
+    assert.equal(entity.params["foo"], "bar");
   });
 
   it("should create an Object3D", () => {
