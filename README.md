@@ -113,5 +113,10 @@ Start sever to view examples
 npm run serve
 ```
 
+Run tests ([mocha](https://github.com/mochajs/mocha)/[karma](https://github.com/karma-runner/karma)/[puppeteer](https://github.com/puppeteer/puppeteer))
+```bash
+npm run test
+```
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
