@@ -1,4 +1,5 @@
 # three.js wrapper
+![Tests](https://github.com/lostways/three-js-wrapper/actions/workflows/tests.yml/badge.svg)
 
 Three.js wrapper provies a simple lightweight framework for using Three.js to add 3d objects and animations to your project.
 
