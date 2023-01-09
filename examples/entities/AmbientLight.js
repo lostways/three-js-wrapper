@@ -1,21 +1,18 @@
-import { ThreeJSEntity } from '../../build/three-js-wrapper.module.js';
+import { ThreeJSEntity } from "../../build/three-js-wrapper.module.js";
 
-//Ambient Light 
+//Ambient Light
 export default class AmbientAndSpotLight extends ThreeJSEntity {
-    create (){
-        const {
-        } = this.params;
+  create() {
+    const {} = this.params;
 
-        
-        const ambientLight = new this.THREE.HemisphereLight(
-          'white',
-          'darkslategrey',
-          5,
-        );
+    const ambientLight = new this.THREE.HemisphereLight(
+      "white",
+      "darkslategrey",
+      5
+    );
 
-        return ambientLight;
-    }
+    return ambientLight;
+  }
 
-    update () {
-    }
- };
+  update() {}
+}

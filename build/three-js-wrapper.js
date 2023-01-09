@@ -50218,7 +50218,7 @@ if ( typeof window !== 'undefined' ) {
 
 }
 
-var THREE = /*#__PURE__*/Object.freeze({
+var SUPER_THREE = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	ACESFilmicToneMapping: ACESFilmicToneMapping,
 	AddEquation: AddEquation,
@@ -56242,8 +56242,18 @@ function toTrianglesDrawMode( geometry, drawMode ) {
 
 }
 
+// Create our wrapped THREE instance
+const WrappedThree = Object.assign({}, SUPER_THREE, {
+    OrbitControls,
+    GLTFLoader,
+});
+
 class ThreeJSWrapper {
     constructor(canvas) {
+        this.isRunning = false;
+        if (!(canvas && typeof canvas === "object")) {
+            throw new Error("canvas is required to construct wrapper");
+        }
         //canvas
         this.canvas = canvas;
         //dimensions
@@ -56254,19 +56264,19 @@ class ThreeJSWrapper {
         //camera
         this.camera = this.buildCamera();
         //scene
-        this.scene = new Scene();
+        this.scene = new WrappedThree.Scene();
         //renderer
         this.renderer = this.buildRenderer();
         //controls
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls = new WrappedThree.OrbitControls(this.camera, this.renderer.domElement);
         //loader
-        this.loader = new GLTFLoader();
+        this.loader = new WrappedThree.GLTFLoader();
         //clock
-        this.clock = new Clock();
+        this.clock = new WrappedThree.Clock();
     }
     //static THREE instance
     static get THREE() {
-        return THREE;
+        return WrappedThree;
     }
     //add an entity to the scene
     addEntity(entity) {
@@ -56274,16 +56284,22 @@ class ThreeJSWrapper {
     }
     //remove en entity from the scene
     removeEntity(entity) {
-        if (!(entity.object3d instanceof Object3D))
-            return;
+        if (!(entity &&
+            typeof entity === "object" &&
+            entity.object3d instanceof WrappedThree.Object3D)) {
+            throw new Error("Can't remove invalid ThreeJSEntity");
+        }
+        if (!this.scene.children.includes(entity.object3d)) {
+            throw new Error("Can't remove entity that is not in scene");
+        }
         let object3d = entity.object3d;
-        if (object3d instanceof Mesh) {
+        if (object3d instanceof WrappedThree.Mesh) {
             if (object3d.geometry) {
                 object3d.geometry.dispose();
             }
             if (object3d.material) {
                 if (object3d.material instanceof Array) {
-                    object3d.material.forEach(material => material.dispose());
+                    object3d.material.forEach((material) => material.dispose());
                 }
                 else {
                     object3d.material.dispose();
@@ -56296,8 +56312,13 @@ class ThreeJSWrapper {
     start() {
         this.resize();
         this.bindEventListeners();
-        this.renderer.render(this.scene, this.camera);
+        this.render();
         this.loop();
+        this.isRunning = true;
+    }
+    //render the scene
+    render() {
+        this.renderer.render(this.scene, this.camera);
     }
     //update the scene animation
     update() {
@@ -56310,7 +56331,7 @@ class ThreeJSWrapper {
     loop() {
         requestAnimationFrame(this.loop.bind(this));
         this.update();
-        this.renderer.render(this.scene, this.camera);
+        this.render();
     }
     //resize the scene to the current canvas size
     resize() {
@@ -56336,7 +56357,7 @@ class ThreeJSWrapper {
     //build our three js renderer
     buildRenderer() {
         let { width, height } = this.dimensions;
-        let renderer = new WebGLRenderer({ canvas: this.canvas });
+        let renderer = new WrappedThree.WebGLRenderer({ canvas: this.canvas });
         renderer.setSize(width, height);
         return renderer;
     }
@@ -56347,7 +56368,7 @@ class ThreeJSWrapper {
         let aspect = width / height;
         let near = 0.1;
         let far = 1000;
-        return new PerspectiveCamera(fov, aspect, near, far);
+        return new WrappedThree.PerspectiveCamera(fov, aspect, near, far);
     }
 }
 

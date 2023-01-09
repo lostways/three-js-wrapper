@@ -1,6 +1,4 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import THREE from "./WrappedThree";
 import ThreeJSEntity from "./ThreeJSEntity";
 
 export default class ThreeJSWrapper {
@@ -9,11 +7,16 @@ export default class ThreeJSWrapper {
   public scene: THREE.Scene;
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
-  public controls: OrbitControls;
-  public loader: GLTFLoader;
+  public controls: InstanceType<typeof THREE.OrbitControls>;
+  public loader: InstanceType<typeof THREE.GLTFLoader>;
   public clock: THREE.Clock;
+  public isRunning: boolean = false;
 
   constructor(canvas: HTMLCanvasElement) {
+    if (!(canvas && typeof canvas === "object")) {
+      throw new Error("canvas is required to construct wrapper");
+    }
+
     //canvas
     this.canvas = canvas;
 
@@ -33,10 +36,13 @@ export default class ThreeJSWrapper {
     this.renderer = this.buildRenderer();
 
     //controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new THREE.OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    );
 
     //loader
-    this.loader = new GLTFLoader();
+    this.loader = new THREE.GLTFLoader();
 
     //clock
     this.clock = new THREE.Clock();
@@ -54,24 +60,34 @@ export default class ThreeJSWrapper {
 
   //remove en entity from the scene
   removeEntity(entity: ThreeJSEntity) {
-    if (!(entity.object3d instanceof THREE.Object3D)) return;
+    if (
+      !(
+        entity &&
+        typeof entity === "object" &&
+        entity.object3d instanceof THREE.Object3D
+      )
+    ) {
+      throw new Error("Can't remove invalid ThreeJSEntity");
+    }
+
+    if (!this.scene.children.includes(entity.object3d)) {
+      throw new Error("Can't remove entity that is not in scene");
+    }
 
     let object3d = entity.object3d;
 
     if (object3d instanceof THREE.Mesh) {
-
       if (object3d.geometry) {
-          object3d.geometry.dispose();
+        object3d.geometry.dispose();
       }
 
       if (object3d.material) {
-          if (object3d.material instanceof Array) {
-              object3d.material.forEach(material => material.dispose());
-          } else {
-              object3d.material.dispose();
-          }
+        if (object3d.material instanceof Array) {
+          object3d.material.forEach((material) => material.dispose());
+        } else {
+          object3d.material.dispose();
+        }
       }
-
     }
 
     this.scene.remove(entity.object3d);
@@ -81,15 +97,21 @@ export default class ThreeJSWrapper {
   start() {
     this.resize();
     this.bindEventListeners();
-    this.renderer.render(this.scene, this.camera);
+    this.render();
     this.loop();
+    this.isRunning = true;
+  }
+
+  //render the scene
+  render() {
+    this.renderer.render(this.scene, this.camera);
   }
 
   //update the scene animation
   update() {
-    let  delta = this.clock.getDelta();
+    let delta = this.clock.getDelta();
     this.scene.children.forEach((ent) => {
-      ent.dispatchEvent({ type: "update", delta: delta  });
+      ent.dispatchEvent({ type: "update", delta: delta });
     });
   }
 
@@ -97,7 +119,7 @@ export default class ThreeJSWrapper {
   loop() {
     requestAnimationFrame(this.loop.bind(this));
     this.update();
-    this.renderer.render(this.scene, this.camera);
+    this.render();
   }
 
   //resize the scene to the current canvas size

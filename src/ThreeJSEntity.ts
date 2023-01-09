@@ -1,4 +1,5 @@
-import ThreeJSWrapper from "./ThreeJSWrapper.js";
+import ThreeJSWrapper from "./ThreeJSWrapper";
+import WrappedThree from "./WrappedThree";
 import { Object3D } from "three";
 
 interface Entity {
@@ -10,7 +11,7 @@ interface Entity {
 export default class ThreeJSEntity implements Entity {
   public object3d: Object3D;
   public params: Object;
-  protected THREE: Object;
+  protected THREE: WrappedThree;
 
   constructor(params = {}) {
     this.params = params;
@@ -31,4 +32,3 @@ export default class ThreeJSEntity implements Entity {
    */
   update(): void {}
 }
-

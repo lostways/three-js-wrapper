@@ -1,4 +1,7 @@
 # three.js wrapper
+![tests](https://github.com/lostways/three-js-wrapper/actions/workflows/tests.yml/badge.svg)
+[![npm version](https://badge.fury.io/js/three-js-wrapper.svg)](https://badge.fury.io/js/three-js-wrapper)
+[![license: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Three.js wrapper provies a simple lightweight framework for using Three.js to add 3d objects and animations to your project.
 
@@ -111,6 +114,11 @@ npm run build
 Start sever to view examples
 ```bash
 npm run serve
+```
+
+Run tests ([mocha](https://github.com/mochajs/mocha)/[karma](https://github.com/karma-runner/karma)/[puppeteer](https://github.com/puppeteer/puppeteer))
+```bash
+npm run test
 ```
 
 ## License

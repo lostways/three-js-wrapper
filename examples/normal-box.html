@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ThreeJS Wrapper Normal Box</title>
     <style type="text/css">
-        html,body { overflow: hidden;margin: 0; width: 100%; height: 100%; }
-        canvas { width: 100%; height: 100%; }
+      html,
+      body {
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
     </style>
-    <link rel="stylesheet" href="/examples/app.css"/>
+    <link rel="stylesheet" href="/examples/app.css" />
   </head>
   <body>
     <nav>
       <ul>
         <li><a href="/">Back</a></li>
-        <li><a href="https://github.com/lostways/three-js-wrapper/blob/master/examples/normal-box.html">View Code</a></li>
+        <li>
+          <a
+            href="https://github.com/lostways/three-js-wrapper/blob/master/examples/normal-box.html"
+            >View Code</a
+          >
+        </li>
       </ul>
     </nav>
     <canvas id="canvas"></canvas>
     <script type="module">
-        /**
-         * Example: Displays a rotating box
-         **/
-        import ThreeJSWrapper from '../build/three-js-wrapper.module.js';
-        import NormalBox from './entities/NormalBox.js';
+      /**
+       * Example: Displays a rotating box
+       **/
+      import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
+      import NormalBox from "./entities/NormalBox.js";
 
-        let canvas = document.getElementById("canvas");
-        let wrapper = new ThreeJSWrapper(canvas);
+      let canvas = document.getElementById("canvas");
+      let wrapper = new ThreeJSWrapper(canvas);
 
-        //create entitites
-        let box = new NormalBox({z:-5});
+      //create entitites
+      let box = new NormalBox({ z: -5 });
 
-        //add enitities
-        wrapper.addEntity(box);
+      //add enitities
+      wrapper.addEntity(box);
 
-        //position controls
-        wrapper.controls.target.set(0,0,-5);
+      //position controls
+      wrapper.controls.target.set(0, 0, -5);
 
-        //start wrapper 
-        wrapper.start();
+      //start wrapper
+      wrapper.start();
     </script>
-</body>
-
+  </body>
 </html>

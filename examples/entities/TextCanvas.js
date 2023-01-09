@@ -14,7 +14,7 @@ export default class TextCanvas extends ThreeJSEntity {
 
     //used for animation
     this.theta = 0;
-   
+
     const labelGeometry = new this.THREE.PlaneGeometry(1, 1);
     const canvas = this.makeTextCanvas(text, size, color);
     const texture = new this.THREE.CanvasTexture(canvas);
