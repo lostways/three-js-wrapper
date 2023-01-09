@@ -171,7 +171,7 @@ describe("ThreeJSWrapper", () => {
     // assert that renderer is fullscreen
     assert.equal(
       threeJsWrapper.renderer.domElement.width,
-      window.document.body.offsetWidth + 1
+      window.document.body.offsetWidth
     );
     assert.equal(
       threeJsWrapper.renderer.domElement.height,
