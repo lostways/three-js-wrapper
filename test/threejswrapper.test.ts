@@ -18,19 +18,19 @@ before(() => {
     }
   `;
   document.head.appendChild(style);
+
+  //add canvas to body
+  testCanvas = document.createElement("canvas");
+  document.body.appendChild(testCanvas);
 });
 
 beforeEach(() => {
-  testCanvas = document.createElement("canvas");
   testCanvas.width = 100;
   testCanvas.height = 100;
-  document.body.appendChild(testCanvas);
-
   threeJsWrapper = new ThreeJSWrapper(testCanvas);
 });
 
 afterEach(() => {
-  document.body.removeChild(testCanvas);
   sinon.restore();
 });
 
