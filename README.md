@@ -1,5 +1,7 @@
 # three.js wrapper
-![Tests](https://github.com/lostways/three-js-wrapper/actions/workflows/tests.yml/badge.svg)
+![tests](https://github.com/lostways/three-js-wrapper/actions/workflows/tests.yml/badge.svg)
+[![npm version](https://badge.fury.io/js/three-js-wrapper.svg)](https://badge.fury.io/js/three-js-wrapper)
+[![license: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Three.js wrapper provies a simple lightweight framework for using Three.js to add 3d objects and animations to your project.
 
