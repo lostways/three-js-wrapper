@@ -16,6 +16,7 @@ export default class UtahTeapot extends ThreeJSEntity {
       fitLid = false,
       blinn = true,
       shading = "smooth",
+      rotation_y = 0,
     } = this.params;
 
     const diffuseColor = new this.THREE.Color();
@@ -72,6 +73,8 @@ export default class UtahTeapot extends ThreeJSEntity {
 
     let obj3d = new this.THREE.Mesh(geo, shadingMap[shading]);
 
+    this.rotation_y = rotation_y;
+
     obj3d.position.z = z;
     obj3d.position.y = y;
     obj3d.position.x = x;
@@ -80,6 +83,7 @@ export default class UtahTeapot extends ThreeJSEntity {
   }
 
   update(event) {
-    event.target.rotation.y -= 0.005;
+    this.rotation_y -= 0.005;
+    event.target.rotation.y = this.rotation_y;
   }
 }

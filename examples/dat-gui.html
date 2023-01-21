@@ -58,6 +58,7 @@
       let body = true;
       let fitLid = false;
       let blinn = true;
+      let current_rotation_y = 0;
 
       let lights = new AmbientAndSpotLight({ ambeint: 1, spot: 0.05 });
 
@@ -119,6 +120,7 @@
 
       function render() {
         if (typeof teapot != "undefined") {
+          current_rotation_y = teapot.object3d.rotation.y;
           wrapper.removeEntity(teapot);
         }
 
@@ -149,6 +151,7 @@
           body: body,
           fitLid: fitLid,
           blinn: blinn,
+          rotation_y: current_rotation_y,
         });
 
         wrapper.addEntity(teapot);
