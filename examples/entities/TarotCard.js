@@ -26,7 +26,7 @@ export default class TarotCard extends ThreeJSEntity {
     });
 
     const obj3d = new this.THREE.Mesh(
-      new this.THREE.BoxBufferGeometry(2, 0.02, 2),
+      new this.THREE.BoxGeometry(2, 0.02, 2),
       [
         darkMaterial, // left
         darkMaterial, // right

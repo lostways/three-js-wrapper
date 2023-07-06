@@ -68,6 +68,9 @@
       //position controls
       wrapper.controls.target.set(0, 0, -100);
 
+      //better lights
+      wrapper.renderer.useLegacyLights = false;
+
       wrapper.start();
 
       setupGui();

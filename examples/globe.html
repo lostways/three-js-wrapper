@@ -53,7 +53,7 @@
         wrapper.addEntity(lights);
 
         //better lights
-        wrapper.renderer.physicallyCorrectLights = true;
+        wrapper.renderer.useLegacyLights = false;
 
         //position controls
         wrapper.controls.target.set(0, 0, -1.5);
