@@ -89,25 +89,20 @@ h2 {
 }
 
 .cards {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
   margin: 0 auto;
-  grid-template-columns: repeat(3, minmax(300px, max-content));
-  grid-template-rows: auto;
-  grid-gap: 1rem;
-}
-
-@media (max-width: 960px) {
-  .cards {
-    grid-template-columns: repeat(auto-fill, minmax(300px, max-content));
-  }
 }
 
 .card {
-  display: grid;
   padding: 1rem;
   text-align: center;
-  align-items: end;
   cursor: pointer;
+  max-width: 400px;
 }
 
 .card:hover {
