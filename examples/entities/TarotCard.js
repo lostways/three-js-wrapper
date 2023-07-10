@@ -12,7 +12,10 @@ export default class TarotCard extends ThreeJSEntity {
     const faceTexture = textureLoader.load("textures/tarot-front.jpg");
     const backTexture = textureLoader.load("textures/tarot-back.jpg");
 
-    var sideMaterial = new this.THREE.MeshPhongMaterial({ color: colorSide, shininess: 0 });
+    var sideMaterial = new this.THREE.MeshPhongMaterial({
+      color: colorSide,
+      shininess: 0,
+    });
 
     var faceUpMaterial = new this.THREE.MeshStandardMaterial({
       color: 0x666666,
