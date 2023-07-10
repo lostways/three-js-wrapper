@@ -44,7 +44,7 @@
       let canvas = document.getElementById("canvas");
       let wrapper = new ThreeJSWrapper(canvas);
 
-      let lights = new AmbientAndSpotLight({ spot: 3 });
+      let lights = new AmbientAndSpotLight({ spot: 10 });
       wrapper.addEntity(lights);
 
       let tarotCard = new TarotCard({ z: -2.5 });
