@@ -5,33 +5,33 @@ export default class TarotCard extends ThreeJSEntity {
   create() {
     const { x = 0, y = 0, z = 0 } = this.params;
 
-    const colorDark = new this.THREE.Color(0xb0b0b0);
-    //const colorLight = new this.THREE.Color(0xffffff);
+    const colorSide = new this.THREE.Color(0x111111);
 
     const textureLoader = new this.THREE.TextureLoader();
 
     const faceTexture = textureLoader.load("textures/tarot-front.jpg");
     const backTexture = textureLoader.load("textures/tarot-back.jpg");
 
-    var darkMaterial = new this.THREE.MeshPhongMaterial({ color: 0x111111 });
-    var faceUpMaterial = new this.THREE.MeshPhongMaterial({
-      color: colorDark,
+    var sideMaterial = new this.THREE.MeshPhongMaterial({ color: colorSide, shininess: 0 });
+
+    var faceUpMaterial = new this.THREE.MeshStandardMaterial({
+      color: 0x666666,
       map: faceTexture,
-      shininess: 40,
+      roughness: 0.3,
     });
-    var faceDownMaterial = new this.THREE.MeshPhongMaterial({
-      color: colorDark,
+    var faceDownMaterial = new this.THREE.MeshStandardMaterial({
+      color: 0x666666,
       map: backTexture,
-      shininess: 40,
+      roughness: 0.3,
     });
 
-    const obj3d = new this.THREE.Mesh(new this.THREE.BoxGeometry(2, 0.02, 2), [
-      darkMaterial, // left
-      darkMaterial, // right
+    const obj3d = new this.THREE.Mesh(new this.THREE.BoxGeometry(2, 0.01, 2), [
+      sideMaterial, // left
+      sideMaterial, // right
       faceDownMaterial, // facedown
       faceUpMaterial, // faceup
-      darkMaterial, //
-      darkMaterial, //
+      sideMaterial, // top
+      sideMaterial, // bottom
     ]);
 
     obj3d.scale.x = 0.65;
