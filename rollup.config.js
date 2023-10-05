@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import uglify from '@lopatnov/rollup-plugin-uglify';
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 
 export default [
     {
