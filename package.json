@@ -13,12 +13,17 @@
     "format": "prettier --write index.ts src test examples",
     "build": "rollup -c rollup.config.js",
     "test": "karma start test/karma.conf.js",
-    "serve": "http-server"
+    "serve": "http-server",
+    "build-api-docs-model": "api-extractor run --local --verbose",
+    "build-api-docs-md": "api-documenter markdown -i ./dist -o ./docs",
+    "build-api-docs": "npm run build-api-docs-model && npm run build-api-docs-md"
   },
   "author": "lostways",
   "license": "MIT",
   "devDependencies": {
     "@lopatnov/rollup-plugin-uglify": "^2.1.0",
+    "@microsoft/api-documenter": "^7.23.9",
+    "@microsoft/api-extractor": "^7.38.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/chai": "^4.3.4",
