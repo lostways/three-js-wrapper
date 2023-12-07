@@ -1,8 +1,9 @@
 {
   "name": "three-js-wrapper",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Wrapper for three.js",
   "main": "build/three-js-wrapper.js",
+  "typings": "build/three-js-wrapper.d.ts",
   "module": "build/three-js-wrapper.module.js",
   "repository": {
     "type": "git",
@@ -12,17 +13,22 @@
     "format": "prettier --write index.ts src test examples",
     "build": "rollup -c rollup.config.js",
     "test": "karma start test/karma.conf.js",
-    "serve": "http-server"
+    "serve": "http-server",
+    "build-api-docs-model": "api-extractor run --local --verbose",
+    "build-api-docs-md": "api-documenter markdown -i ./dist -o ./docs",
+    "build-api-docs": "npm run build-api-docs-model && npm run build-api-docs-md"
   },
   "author": "lostways",
   "license": "MIT",
   "devDependencies": {
     "@lopatnov/rollup-plugin-uglify": "^2.1.0",
+    "@microsoft/api-documenter": "^7.23.9",
+    "@microsoft/api-extractor": "^7.38.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
-    "@types/three": "^0.126.0",
+    "@types/three": "^0.154.0",
     "chai": "^4.3.7",
     "dat.gui": "^0.7.7",
     "eslint": "^7.20.0",
@@ -37,6 +43,7 @@
     "prettier": "^2.8.1",
     "puppeteer": "^19.4.1",
     "rollup": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "rollup-pluginutils": "^2.8.2",
     "sinon": "^15.0.1",
     "terser": "^4.8.0",
@@ -44,6 +51,6 @@
     "typescript": "^4.2.2"
   },
   "dependencies": {
-    "three": "^0.154.0"
+    "three": "*"
   }
 }

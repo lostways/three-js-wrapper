@@ -2,7 +2,10 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "es2015",
-    "strict": true
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "build/dts"
   },
   "include": ["./src/**/*.ts"]
 }

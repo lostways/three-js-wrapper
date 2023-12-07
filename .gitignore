@@ -9,3 +9,4 @@ npm-debug.log
 .vs/
 tags*
 coverage/
+dist/
