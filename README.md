@@ -96,7 +96,7 @@ wrapper.controls.target.set(0,0,-25);
 wrapper.start();
 ```
 
-For more examples see the examples directory.
+For more examples see the examples directory. Or [Api Docs](docs/index.md).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
