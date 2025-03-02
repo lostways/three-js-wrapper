@@ -57,8 +57,17 @@ module.exports = function (config) {
 
     // Karma Typescript configuration
     karmaTypescriptConfig: {
+      compilerOptions: {
+        module: "es2015",
+        tartget: "es2015",
+        exModuleInterop: true,
+      },
       bundlerOptions: {
         transforms: [require("karma-typescript-es6-transform")()],
+        addNodeGlobals: true,
+        resolve: {
+          extensions: [".ts", ".js", ".tsx"],
+        },
       },
     },
   });

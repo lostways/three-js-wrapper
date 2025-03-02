@@ -1,18 +1,10 @@
-import WrappedThree, { ExtendedTHREE, THREE } from "./WrappedThree";
+import THREE from "./WrappedThree";
 import ThreeJSEntity from "./ThreeJSEntity";
 
 export default class ThreeJSWrapper {
-  public canvas: HTMLCanvasElement;
-  public dimensions: { width: number; height: number };
-  public scene: THREE.Scene;
-  public camera: THREE.PerspectiveCamera;
-  public renderer: THREE.WebGLRenderer;
-  public controls: InstanceType<typeof WrappedThree.OrbitControls>;
-  public loader: InstanceType<typeof WrappedThree.GLTFLoader>;
-  public clock: THREE.Clock;
-  public isRunning: boolean = false;
-
-  constructor(canvas: HTMLCanvasElement) {
+  //constructor
+  // @param {HTMLCanvasElement} canvas - The canvas element to render to
+  constructor(canvas) {
     if (!(canvas && typeof canvas === "object")) {
       throw new Error("canvas is required to construct wrapper");
     }
@@ -46,20 +38,25 @@ export default class ThreeJSWrapper {
 
     //clock
     this.clock = new THREE.Clock();
+
+    //running flag
+    this.isRunning = false;
   }
 
   //static THREE instance
-  static get THREE(): ExtendedTHREE {
-    return WrappedThree;
+  static get THREE() {
+    return THREE;
   }
 
   //add an entity to the scene
-  addEntity(entity: ThreeJSEntity) {
+  // @param {ThreeJSEntity} entity - The entity to add
+  addEntity(entity) {
     this.scene.add(entity.object3d);
   }
 
   //remove en entity from the scene
-  removeEntity(entity: ThreeJSEntity) {
+  // @param {ThreeJSEntity} entity - The entity to remove
+  removeEntity(entity) {
     if (
       !(
         entity &&
@@ -152,7 +149,8 @@ export default class ThreeJSWrapper {
   }
 
   //build our three js renderer
-  buildRenderer(): THREE.WebGLRenderer {
+  // @returns {THREE.WebGLRenderer} - The renderer
+  buildRenderer() {
     let { width, height } = this.dimensions;
     let renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     renderer.setSize(width, height);
@@ -160,7 +158,8 @@ export default class ThreeJSWrapper {
   }
 
   //build our camera
-  buildCamera(): THREE.PerspectiveCamera {
+  // @returns {THREE.PerspectiveCamera} - The camera
+  buildCamera() {
     let { width, height } = this.dimensions;
     let fov = 75;
     let aspect = width / height;
