@@ -1,10 +1,8 @@
 // src/ThreeJSEntity.js
-import ThreeJSWrapper from "./ThreeJSWrapper";
-
+import ThreeJSWrapper from "./ThreeJSWrapper.js";
 
 //Entity base class
 export default class ThreeJSEntity {
-
   constructor(params = {}) {
     this.params = params;
     this.THREE = ThreeJSWrapper.THREE;

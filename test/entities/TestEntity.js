@@ -1,4 +1,4 @@
-import ThreeJSEntity from "../../src/ThreeJSEntity";
+import ThreeJSEntity from "ThreeJSEntity";
 
 // TestEntity
 export default class TestEntity extends ThreeJSEntity {

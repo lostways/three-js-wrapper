@@ -9,26 +9,22 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
-    frameworks: ["mocha", "karma-typescript"],
+    frameworks: ["mocha"],
 
     // list of files / patterns to load in the browser
-    files: ["../src/*.ts", "../test/entities/*.ts", "../test/*.ts"],
+    files: [
+      { pattern: "../build/three-js-wrapper.module.js", type: "module" },
+      { pattern: "../test/entities/*.js", type: "module" },
+      { pattern: "../test/*.js", type: "module" },
+    ],
 
     // list of files / patterns to exclude
     exclude: [],
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
-    preprocessors: {
-      "../src/**/*.ts": ["karma-typescript"],
-      "../test/entities/*.ts": ["karma-typescript"],
-      "../test/*.ts": ["karma-typescript"],
-    },
-
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ["karma-typescript", "mocha"],
+    reporters: ["mocha"],
 
     // web server port
     port: 9876,
@@ -54,20 +50,9 @@ module.exports = function (config) {
     // Concurrency level
     // how many browser instances should be started simultaneously
     concurrency: Infinity,
-
-    // Karma Typescript configuration
-    karmaTypescriptConfig: {
-      compilerOptions: {
-        module: "es2015",
-        tartget: "es2015",
-        exModuleInterop: true,
-      },
-      bundlerOptions: {
-        transforms: [require("karma-typescript-es6-transform")()],
-        addNodeGlobals: true,
-        resolve: {
-          extensions: [".ts", ".js", ".tsx"],
-        },
+    client: {
+      mocha: {
+        timeout: 6000,
       },
     },
   });

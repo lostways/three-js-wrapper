@@ -1,6 +1,6 @@
-import ThreeJSEntity from "../src/ThreeJSEntity";
-import TestEntity from "./entities/TestEntity";
-import WrappedThree from "../src/WrappedThree";
+import ThreeJSEntity from "ThreeJSEntity";
+import TestEntity from "./entities/TestEntity.js";
+import WrappedThree from "WrappedThree";
 import { assert } from "chai";
 import * as sinon from "sinon";
 
