@@ -1,5 +1,5 @@
 import ThreeJSWrapper from "./ThreeJSWrapper";
-import WrappedThree from "./WrappedThree";
+import { ExtendedTHREE } from "./WrappedThree";
 import { Object3D } from "three";
 
 interface Entity {
@@ -10,10 +10,10 @@ interface Entity {
 //Entity base class
 export default class ThreeJSEntity implements Entity {
   public object3d: Object3D;
-  public params: Object;
-  protected THREE: WrappedThree;
+  public params: Record<string, any>;
+  protected THREE: ExtendedTHREE;
 
-  constructor(params = {}) {
+  constructor(params: Record<string, any> = {}) {
     this.params = params;
     this.THREE = ThreeJSWrapper.THREE;
     this.object3d = this.create();
@@ -30,5 +30,5 @@ export default class ThreeJSEntity implements Entity {
   /**
    * Override to define animations
    */
-  update(): void {}
+  update(): void { }
 }

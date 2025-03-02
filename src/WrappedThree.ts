@@ -1,18 +1,20 @@
-import * as SUPER_THREE from "three";
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-// create type for our wrapped THREE instance
-type WrappedThree = typeof SUPER_THREE & {
+
+export type ExtendedTHREE = typeof THREE & {
   OrbitControls: typeof OrbitControls;
   GLTFLoader: typeof GLTFLoader;
 };
 
-// Create our wrapped THREE instance
-const WrappedThree = Object.assign({}, SUPER_THREE, {
-  OrbitControls,
-  GLTFLoader,
-});
+// Wrap the original THREE instance
+const WrappedThree = THREE as ExtendedTHREE;
+WrappedThree.OrbitControls = OrbitControls;
+WrappedThree.GLTFLoader = GLTFLoader;
+
+// Re-export the original THREE instance
+export { THREE };
 
 // Export our wrapped THREE instance
 export default WrappedThree;

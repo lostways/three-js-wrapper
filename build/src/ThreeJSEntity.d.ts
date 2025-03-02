@@ -1,4 +1,4 @@
-import WrappedThree from "./WrappedThree";
+import { ExtendedTHREE } from "./WrappedThree";
 import { Object3D } from "three";
 interface Entity {
     create(): Object3D;
@@ -6,9 +6,9 @@ interface Entity {
 }
 export default class ThreeJSEntity implements Entity {
     object3d: Object3D;
-    params: Object;
-    protected THREE: WrappedThree;
-    constructor(params?: {});
+    params: Record<string, any>;
+    protected THREE: ExtendedTHREE;
+    constructor(params?: Record<string, any>);
     /**
      * Override to create Object3D
      */

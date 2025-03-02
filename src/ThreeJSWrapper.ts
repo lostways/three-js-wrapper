@@ -1,4 +1,4 @@
-import THREE from "./WrappedThree";
+import WrappedThree, { ExtendedTHREE, THREE } from "./WrappedThree";
 import ThreeJSEntity from "./ThreeJSEntity";
 
 export default class ThreeJSWrapper {
@@ -7,8 +7,8 @@ export default class ThreeJSWrapper {
   public scene: THREE.Scene;
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
-  public controls: InstanceType<typeof THREE.OrbitControls>;
-  public loader: InstanceType<typeof THREE.GLTFLoader>;
+  public controls: InstanceType<typeof WrappedThree.OrbitControls>;
+  public loader: InstanceType<typeof WrappedThree.GLTFLoader>;
   public clock: THREE.Clock;
   public isRunning: boolean = false;
 
@@ -36,21 +36,21 @@ export default class ThreeJSWrapper {
     this.renderer = this.buildRenderer();
 
     //controls
-    this.controls = new THREE.OrbitControls(
+    this.controls = new WrappedThree.OrbitControls(
       this.camera,
       this.renderer.domElement
     );
 
     //loader
-    this.loader = new THREE.GLTFLoader();
+    this.loader = new WrappedThree.GLTFLoader();
 
     //clock
     this.clock = new THREE.Clock();
   }
 
   //static THREE instance
-  static get THREE() {
-    return THREE;
+  static get THREE(): ExtendedTHREE {
+    return WrappedThree;
   }
 
   //add an entity to the scene

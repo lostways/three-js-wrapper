@@ -1,11 +1,19 @@
 {
   "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es2015",
     "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "build/dts"
+    "sourceMap": true,
+    "declarationDir": "build/dts",
+    "outDir": "build",
+    "rootDir": ".",
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "index.ts"],
+  "exclude": ["node_modules", "build", "dist"]
 }
