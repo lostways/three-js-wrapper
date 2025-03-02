@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Karma Test Context</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <!-- Import Map to resolve bare module specifiers -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/base/node_modules/three/build/three.module.js",
+        "three/": "/base/node_modules/three/",
+        "WrappedThree": "/base/src/WrappedThree.js",
+        "ThreeJSWrapper": "/base/src/ThreeJSWrapper.js",
+        "ThreeJSEntity": "/base/src/ThreeJSEntity.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- The context.html script will be injected here by Karma -->
+</body>
+</html>

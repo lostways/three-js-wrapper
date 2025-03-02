@@ -11,34 +11,34 @@ module.exports = function (config) {
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
     frameworks: ["mocha"],
 
+    customContextFile: "test/karma-context.html",
+
     // list of files / patterns to load in the browser
     files: [
       // Add the actual Three.js libraries first
       {
         pattern: "node_modules/three/build/three.module.js",
         type: "module",
+        included: false,
       },
       {
         pattern: "node_modules/three/examples/jsm/controls/OrbitControls.js",
         type: "module",
+        included: false,
       },
       {
         pattern: "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
         type: "module",
+        included: false,
       },
+      { pattern: "src/**/*.js", type: "module", included: false },
 
-      { pattern: "build/three-js-wrapper.module.js", type: "module" },
       { pattern: "test/entities/*.js", type: "module" },
       { pattern: "test/*.js", type: "module" },
     ],
-    // Set up a proxy to map bare imports to actual locations
-    proxies: {
-      "/three": "/base/node_modules/three/build/three.module.js",
-      "/three/examples/jsm/controls/OrbitControls.js":
-        "/base/node_modules/three/examples/jsm/controls/OrbitControls.js",
-      "/three/examples/jsm/loaders/GLTFLoader.js":
-        "/base/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
-    },
+
+    crossOriginAttribute: false,
+
     // list of files / patterns to exclude
     exclude: [],
 
