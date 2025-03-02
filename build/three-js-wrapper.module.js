@@ -180,10 +180,8 @@ class ThreeJSWrapper {
 
 // src/ThreeJSEntity.js
 
-
 //Entity base class
 class ThreeJSEntity {
-
   constructor(params = {}) {
     this.params = params;
     this.THREE = ThreeJSWrapper.THREE;

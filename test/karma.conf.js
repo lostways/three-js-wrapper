@@ -5,7 +5,7 @@ process.env.CHROME_BIN = require("puppeteer").executablePath();
 module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: "",
+    basePath: "..",
 
     // frameworks to use
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
@@ -13,11 +13,32 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: "../build/three-js-wrapper.module.js", type: "module" },
-      { pattern: "../test/entities/*.js", type: "module" },
-      { pattern: "../test/*.js", type: "module" },
-    ],
+      // Add the actual Three.js libraries first
+      {
+        pattern: "node_modules/three/build/three.module.js",
+        type: "module",
+      },
+      {
+        pattern: "node_modules/three/examples/jsm/controls/OrbitControls.js",
+        type: "module",
+      },
+      {
+        pattern: "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+        type: "module",
+      },
 
+      { pattern: "build/three-js-wrapper.module.js", type: "module" },
+      { pattern: "test/entities/*.js", type: "module" },
+      { pattern: "test/*.js", type: "module" },
+    ],
+    // Set up a proxy to map bare imports to actual locations
+    proxies: {
+      "/three": "/base/node_modules/three/build/three.module.js",
+      "/three/examples/jsm/controls/OrbitControls.js":
+        "/base/node_modules/three/examples/jsm/controls/OrbitControls.js",
+      "/three/examples/jsm/loaders/GLTFLoader.js":
+        "/base/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+    },
     // list of files / patterns to exclude
     exclude: [],
 

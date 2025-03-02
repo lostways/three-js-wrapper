@@ -33,11 +33,13 @@
     "karma-chrome-launcher": "^3.1.1",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-webpack": "^5.0.1",
     "mocha": "^10.2.0",
     "prettier": "^2.8.1",
     "puppeteer": "^19.4.1",
     "rollup": "^4.34.9",
-    "sinon": "^15.0.1"
+    "sinon": "^15.0.1",
+    "webpack": "^5.98.0"
   },
   "dependencies": {
     "three": "^0.161.0"
