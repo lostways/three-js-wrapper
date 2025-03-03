@@ -1,4 +1,4 @@
-import ThreeJSWrapper from "ThreeJSWrapper";
+import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
 import TestEntity from "./entities/TestEntity.js";
 import * as sinon from "sinon";
 import { assert } from "chai";

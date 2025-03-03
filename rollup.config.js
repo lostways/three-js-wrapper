@@ -11,7 +11,6 @@ export default [
       sourcemap: true,
       exports: "named",
     },
-    external: ["three", /three\/examples\/jsm\/.*/],
     plugins: [resolve()],
   },
 
@@ -24,13 +23,7 @@ export default [
       name: "ThreeJSWrapper",
       sourcemap: true,
       exports: "named",
-      globals: {
-        three: "THREE",
-        "three/examples/jsm/controls/OrbitControls": "THREE.OrbitControls",
-        "three/examples/jsm/loaders/GLTFLoader": "THREE.GLTFLoader",
-      },
     },
-    external: ["three", /three\/examples\/jsm\/.*/],
     plugins: [resolve(), terser()],
   },
 
@@ -43,7 +36,6 @@ export default [
       sourcemap: true,
       exports: "named",
     },
-    external: ["three", /three\/examples\/jsm\/.*/],
     plugins: [resolve()],
   },
 ];

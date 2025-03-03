@@ -8,5 +8,7 @@ const WrappedThree = Object.assign({}, THREE, {
   GLTFLoader,
 });
 
+export { THREE };
+
 // Export our wrapped THREE instance
 export default WrappedThree;

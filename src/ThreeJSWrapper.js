@@ -1,4 +1,4 @@
-import WrappedThree from "./WrappedThree.js";
+import WrappedThree, { THREE } from "./WrappedThree.js";
 
 export default class ThreeJSWrapper {
   //constructor

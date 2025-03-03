@@ -1,4 +1,4 @@
-import ThreeJSEntity from "ThreeJSWrapper";
+import { ThreeJSEntity } from "../../build/three-js-wrapper.module.js";
 
 // TestEntity
 export default class TestEntity extends ThreeJSEntity {

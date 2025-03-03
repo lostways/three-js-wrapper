@@ -13,7 +13,11 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: "build/three-js-wrapper.module.js", type: "module" },
+      {
+        pattern: "build/three-js-wrapper.module.js",
+        type: "module",
+        included: false,
+      },
       { pattern: "test/entities/*.js", type: "module" },
       { pattern: "test/*.js", type: "module" },
     ],
