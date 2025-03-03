@@ -11,33 +11,12 @@ module.exports = function (config) {
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
     frameworks: ["mocha"],
 
-    customContextFile: "test/karma-context.html",
-
     // list of files / patterns to load in the browser
     files: [
-      // Add the actual Three.js libraries first
-      {
-        pattern: "node_modules/three/build/three.module.js",
-        type: "module",
-        included: false,
-      },
-      {
-        pattern: "node_modules/three/examples/jsm/controls/OrbitControls.js",
-        type: "module",
-        included: false,
-      },
-      {
-        pattern: "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
-        type: "module",
-        included: false,
-      },
-      { pattern: "src/**/*.js", type: "module", included: false },
-
+      { pattern: "build/three-js-wrapper.module.js", type: "module" },
       { pattern: "test/entities/*.js", type: "module" },
       { pattern: "test/*.js", type: "module" },
     ],
-
-    crossOriginAttribute: false,
 
     // list of files / patterns to exclude
     exclude: [],
@@ -55,7 +34,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,

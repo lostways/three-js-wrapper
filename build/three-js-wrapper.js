@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var THREE = require('three');
+var THREE$1 = require('three');
 var OrbitControls_js = require('three/examples/jsm/controls/OrbitControls.js');
 var GLTFLoader_js = require('three/examples/jsm/loaders/GLTFLoader.js');
 
@@ -23,10 +23,10 @@ function _interopNamespaceDefault(e) {
   return Object.freeze(n);
 }
 
-var THREE__namespace = /*#__PURE__*/_interopNamespaceDefault(THREE);
+var THREE__namespace = /*#__PURE__*/_interopNamespaceDefault(THREE$1);
 
 // Wrap our THREE instance
-const WrappedThree$1 = Object.assign({}, THREE__namespace, {
+const WrappedThree = Object.assign({}, THREE__namespace, {
   OrbitControls: OrbitControls_js.OrbitControls,
   GLTFLoader: GLTFLoader_js.GLTFLoader,
 });
@@ -52,7 +52,7 @@ class ThreeJSWrapper {
     this.camera = this.buildCamera();
 
     //scene
-    this.scene = new WrappedThree$1.Scene();
+    this.scene = new THREE.Scene();
 
     //renderer
     this.renderer = this.buildRenderer();
@@ -67,7 +67,7 @@ class ThreeJSWrapper {
     this.loader = new WrappedThree.GLTFLoader();
 
     //clock
-    this.clock = new WrappedThree$1.Clock();
+    this.clock = new THREE.Clock();
 
     //running flag
     this.isRunning = false;
@@ -75,7 +75,7 @@ class ThreeJSWrapper {
 
   //static THREE instance
   static get THREE() {
-    return WrappedThree$1;
+    return THREE;
   }
 
   //add an entity to the scene
@@ -91,7 +91,7 @@ class ThreeJSWrapper {
       !(
         entity &&
         typeof entity === "object" &&
-        entity.object3d instanceof WrappedThree$1.Object3D
+        entity.object3d instanceof THREE.Object3D
       )
     ) {
       throw new Error("Can't remove invalid ThreeJSEntity");
@@ -103,7 +103,7 @@ class ThreeJSWrapper {
 
     let object3d = entity.object3d;
 
-    if (object3d instanceof WrappedThree$1.Mesh) {
+    if (object3d instanceof THREE.Mesh) {
       if (object3d.geometry) {
         object3d.geometry.dispose();
       }
@@ -182,7 +182,7 @@ class ThreeJSWrapper {
   // @returns {THREE.WebGLRenderer} - The renderer
   buildRenderer() {
     let { width, height } = this.dimensions;
-    let renderer = new WrappedThree$1.WebGLRenderer({ canvas: this.canvas });
+    let renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     renderer.setSize(width, height);
     return renderer;
   }
@@ -196,7 +196,7 @@ class ThreeJSWrapper {
     let near = 0.1;
     let far = 1000;
 
-    return new WrappedThree$1.PerspectiveCamera(fov, aspect, near, far);
+    return new THREE.PerspectiveCamera(fov, aspect, near, far);
   }
 }
 
