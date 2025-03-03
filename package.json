@@ -11,7 +11,7 @@
   "scripts": {
     "format": "prettier --write index.js src test examples",
     "build": "rollup --bundleConfigAsCjs -c rollup.config.js",
-    "test": "npm run build && karma start test/karma.conf.js",
+    "test": "npm run build && karma start --browsers=ChromeHeadlessNoSandbox test/karma.conf.js",
     "serve": "http-server"
   },
   "author": "lostways",

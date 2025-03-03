@@ -72913,7 +72913,7 @@ class ThreeJSWrapper {
     //controls
     this.controls = new WrappedThree.OrbitControls(
       this.camera,
-      this.renderer.domElement
+      this.renderer.domElement,
     );
 
     //loader
