@@ -51,7 +51,7 @@ describe("ThreeJSWrapper", () => {
   it("should set default camera", () => {
     assert.instanceOf(
       threeJsWrapper.camera,
-      ThreeJSWrapper.THREE.PerspectiveCamera
+      ThreeJSWrapper.THREE.PerspectiveCamera,
     );
   });
 
@@ -62,14 +62,14 @@ describe("ThreeJSWrapper", () => {
   it("should set default renderer", () => {
     assert.instanceOf(
       threeJsWrapper.renderer,
-      ThreeJSWrapper.THREE.WebGLRenderer
+      ThreeJSWrapper.THREE.WebGLRenderer,
     );
   });
 
   it("should set default controls", () => {
     assert.instanceOf(
       threeJsWrapper.controls,
-      ThreeJSWrapper.THREE.OrbitControls
+      ThreeJSWrapper.THREE.OrbitControls,
     );
   });
 
@@ -102,7 +102,7 @@ describe("ThreeJSWrapper", () => {
     // assert that camera aspect is not fullscreen
     assert.notEqual(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is not fullscreen
@@ -119,17 +119,17 @@ describe("ThreeJSWrapper", () => {
     // assert that camera is fullscreen
     assert.equal(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is fullscreen
     assert.equal(
       threeJsWrapper.renderer.domElement.width,
-      window.document.body.offsetWidth
+      window.document.body.offsetWidth,
     );
     assert.equal(
       threeJsWrapper.renderer.domElement.height,
-      window.document.body.offsetHeight
+      window.document.body.offsetHeight,
     );
   });
 
@@ -144,7 +144,7 @@ describe("ThreeJSWrapper", () => {
     // assert that camera aspect is not fullscreen
     assert.notEqual(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is not fullscreen
@@ -161,17 +161,17 @@ describe("ThreeJSWrapper", () => {
     // assert that camera is fullscreen
     assert.equal(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is fullscreen
     assert.equal(
       threeJsWrapper.renderer.domElement.width,
-      window.document.body.offsetWidth
+      window.document.body.offsetWidth,
     );
     assert.equal(
       threeJsWrapper.renderer.domElement.height,
-      window.document.body.offsetHeight
+      window.document.body.offsetHeight,
     );
   });
 

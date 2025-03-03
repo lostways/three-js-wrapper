@@ -19,7 +19,7 @@ export default class Globe extends ThreeJSEntity {
     const earthMap = this.textureLoader.load("textures/globe/earthmap4k.jpg");
     const earthBump = this.textureLoader.load("textures/globe/earthbump4k.jpg");
     const cloudsMap = this.textureLoader.load(
-      "textures/globe/earthclouds4k.png"
+      "textures/globe/earthclouds4k.png",
     );
 
     //materials
@@ -42,13 +42,13 @@ export default class Globe extends ThreeJSEntity {
     const geometry = new this.THREE.SphereGeometry(0.5, 14, 14).translate(
       0,
       0.1,
-      0
+      0,
     );
     const earth = new this.THREE.Mesh(geometry, materialEarth);
     const cloudGeometry = new this.THREE.SphereGeometry(0.55, 14, 14).translate(
       0,
       0.1,
-      0
+      0,
     );
     const clouds = new this.THREE.Mesh(cloudGeometry, materialClouds);
 

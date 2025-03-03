@@ -8,7 +8,7 @@ export default class AmbientAndSpotLight extends ThreeJSEntity {
     const ambientLight = new this.THREE.HemisphereLight(
       "white",
       "darkslategrey",
-      5
+      5,
     );
 
     return ambientLight;

@@ -68,7 +68,7 @@ export default class UtahTeapot extends ThreeJSEntity {
       lid,
       body,
       fitLid,
-      blinn
+      blinn,
     );
 
     let obj3d = new this.THREE.Mesh(geo, shadingMap[shading]);

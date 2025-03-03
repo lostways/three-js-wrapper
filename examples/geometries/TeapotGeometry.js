@@ -62,7 +62,7 @@ class TeapotGeometry extends BufferGeometry {
     lid = true,
     body = true,
     fitLid = true,
-    blinn = true
+    blinn = true,
   ) {
     // 32 * 4 * 4 Bezier spline patches
     const teapotPatches = [
@@ -229,7 +229,7 @@ class TeapotGeometry extends BufferGeometry {
       1.0,
       0.0,
       0.0,
-      0.0
+      0.0,
     );
 
     const g = [];
@@ -278,7 +278,7 @@ class TeapotGeometry extends BufferGeometry {
     const notDegenerate = (
       vtx1,
       vtx2,
-      vtx3 // if any vertex matches, return false
+      vtx3, // if any vertex matches, return false
     ) =>
       !(
         (vertices[vtx1 * 3] === vertices[vtx2 * 3] &&
@@ -355,7 +355,7 @@ class TeapotGeometry extends BufferGeometry {
             g[12],
             g[13],
             g[14],
-            g[15]
+            g[15],
           );
 
           tmtx.multiplyMatrices(gmx, ms);
