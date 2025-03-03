@@ -103,7 +103,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Start by installing dependencies
 ```bash
-npm install 
+yarn install 
 ```
 
 All source files are located in the /src directory. Examples are in the /examples directory. To build the source run:
