@@ -1,44 +1,41 @@
-import resolve from '@rollup/plugin-node-resolve';
-import uglify from '@lopatnov/rollup-plugin-uglify';
-import typescript from 'rollup-plugin-typescript2';
+import resolve from "@rollup/plugin-node-resolve";
+import terser from "@rollup/plugin-terser";
 
 export default [
-    {
-        input: 'index.ts',
-        plugins: [typescript(),resolve()],
-        treeshake: false,
-        output: [
-            {
-                format: 'cjs',
-                file: 'build/three-js-wrapper.js',
-                exports: 'named'
-            }
-        ]
+  // ESM build
+  {
+    input: "index.js",
+    output: {
+      format: "esm",
+      file: "build/three-js-wrapper.module.js",
+      sourcemap: true,
+      exports: "named",
     },
-    {
-        input: 'index.ts',
-        plugins: [typescript(),resolve()],
-        treeshake: false,
-        output: [
-            {
-                format: 'esm',
-                file: 'build/three-js-wrapper.module.js',
-                exports: 'named'
-            }
-        ]
-    },
-    {
+    plugins: [resolve()],
+  },
 
-        input: 'index.ts',
-        plugins: [typescript(),resolve(),uglify()],
-        treeshake: false,
-        output: [
-            {
-                format: 'cjs',
-                file: 'build/three-js-wrapper.min.js',
-                compact: true,
-                exports: 'named'
-            }
-        ]
-    }
-]
+  // UMD build (minified)
+  {
+    input: "index.js",
+    output: {
+      format: "umd",
+      file: "build/three-js-wrapper.min.js",
+      name: "ThreeJSWrapper",
+      sourcemap: true,
+      exports: "named",
+    },
+    plugins: [resolve(), terser()],
+  },
+
+  // CJS build
+  {
+    input: "index.js",
+    output: {
+      format: "cjs",
+      file: "build/three-js-wrapper.js",
+      sourcemap: true,
+      exports: "named",
+    },
+    plugins: [resolve()],
+  },
+];

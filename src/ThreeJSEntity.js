@@ -1,18 +1,8 @@
-import ThreeJSWrapper from "./ThreeJSWrapper";
-import WrappedThree from "./WrappedThree";
-import { Object3D } from "three";
-
-interface Entity {
-  create(): Object3D;
-  update(): void;
-}
+// src/ThreeJSEntity.js
+import ThreeJSWrapper from "./ThreeJSWrapper.js";
 
 //Entity base class
-export default class ThreeJSEntity implements Entity {
-  public object3d: Object3D;
-  public params: Object;
-  protected THREE: WrappedThree;
-
+export default class ThreeJSEntity {
   constructor(params = {}) {
     this.params = params;
     this.THREE = ThreeJSWrapper.THREE;
@@ -23,12 +13,13 @@ export default class ThreeJSEntity implements Entity {
   /**
    * Override to create Object3D
    */
-  create(): Object3D {
+  create() {
     throw new Error("Entities must have a create method");
   }
 
   /**
    * Override to define animations
+   * @param {Object} event - Update event containing delta time
    */
-  update(): void {}
+  update(event) {}
 }

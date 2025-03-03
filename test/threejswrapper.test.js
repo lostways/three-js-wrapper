@@ -1,11 +1,8 @@
-import ThreeJSWrapper from "../src/ThreeJSWrapper";
-import ThreeJSEntity from "../src/ThreeJSEntity";
-import TestEntity from "./entities/TestEntity";
-import * as sinon from "sinon";
-import { assert } from "chai";
+import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
+import TestEntity from "./entities/TestEntity.js";
 
-let testCanvas: HTMLCanvasElement;
-let threeJsWrapper: ThreeJSWrapper;
+let testCanvas;
+let threeJsWrapper;
 
 before(() => {
   const style = document.createElement("style");
@@ -37,7 +34,6 @@ afterEach(() => {
 describe("ThreeJSWrapper", () => {
   it("should check that canvas is set", () => {
     assert.throws(() => {
-      // @ts-expect-error
       let invalidThreeJsWrapper = new ThreeJSWrapper("hello");
     }, "canvas is required to construct wrapper");
   });
@@ -55,7 +51,7 @@ describe("ThreeJSWrapper", () => {
   it("should set default camera", () => {
     assert.instanceOf(
       threeJsWrapper.camera,
-      ThreeJSWrapper.THREE.PerspectiveCamera
+      ThreeJSWrapper.THREE.PerspectiveCamera,
     );
   });
 
@@ -66,14 +62,14 @@ describe("ThreeJSWrapper", () => {
   it("should set default renderer", () => {
     assert.instanceOf(
       threeJsWrapper.renderer,
-      ThreeJSWrapper.THREE.WebGLRenderer
+      ThreeJSWrapper.THREE.WebGLRenderer,
     );
   });
 
   it("should set default controls", () => {
     assert.instanceOf(
       threeJsWrapper.controls,
-      ThreeJSWrapper.THREE.OrbitControls
+      ThreeJSWrapper.THREE.OrbitControls,
     );
   });
 
@@ -106,7 +102,7 @@ describe("ThreeJSWrapper", () => {
     // assert that camera aspect is not fullscreen
     assert.notEqual(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is not fullscreen
@@ -123,17 +119,17 @@ describe("ThreeJSWrapper", () => {
     // assert that camera is fullscreen
     assert.equal(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is fullscreen
     assert.equal(
       threeJsWrapper.renderer.domElement.width,
-      window.document.body.offsetWidth
+      window.document.body.offsetWidth,
     );
     assert.equal(
       threeJsWrapper.renderer.domElement.height,
-      window.document.body.offsetHeight
+      window.document.body.offsetHeight,
     );
   });
 
@@ -148,7 +144,7 @@ describe("ThreeJSWrapper", () => {
     // assert that camera aspect is not fullscreen
     assert.notEqual(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is not fullscreen
@@ -165,17 +161,17 @@ describe("ThreeJSWrapper", () => {
     // assert that camera is fullscreen
     assert.equal(
       threeJsWrapper.camera.aspect,
-      window.innerWidth / window.innerHeight
+      window.innerWidth / window.innerHeight,
     );
 
     // assert that renderer is fullscreen
     assert.equal(
       threeJsWrapper.renderer.domElement.width,
-      window.document.body.offsetWidth
+      window.document.body.offsetWidth,
     );
     assert.equal(
       threeJsWrapper.renderer.domElement.height,
-      window.document.body.offsetHeight
+      window.document.body.offsetHeight,
     );
   });
 
@@ -208,7 +204,7 @@ describe("ThreeJSWrapper", () => {
   });
 
   it("should add entity to scene", () => {
-    const entity: ThreeJSEntity = new TestEntity({});
+    const entity = new TestEntity({});
 
     assert.equal(threeJsWrapper.scene.children.length, 0);
 
@@ -217,7 +213,7 @@ describe("ThreeJSWrapper", () => {
   });
 
   it("should remove entity from scene", () => {
-    const entity: ThreeJSEntity = new TestEntity({});
+    const entity = new TestEntity({});
 
     threeJsWrapper.addEntity(entity);
     assert.equal(threeJsWrapper.scene.children.length, 1);
@@ -228,21 +224,20 @@ describe("ThreeJSWrapper", () => {
 
   it("should throw error when removing invalid entity", () => {
     assert.throws(() => {
-      // @ts-expect-error
       threeJsWrapper.removeEntity("hello");
     }, "Can't remove invalid ThreeJSEntity");
   });
 
   it("should throw error when removing entity that is not in scene", () => {
     assert.throws(() => {
-      const entity: ThreeJSEntity = new TestEntity({});
+      const entity = new TestEntity({});
       threeJsWrapper.removeEntity(entity);
     }, "Can't remove entity that is not in scene");
   });
 
   it("should call update on all entities when update is called", () => {
     const updateSpy = sinon.spy(TestEntity.prototype, "update");
-    const entity: ThreeJSEntity = new TestEntity({});
+    const entity = new TestEntity({});
 
     threeJsWrapper.addEntity(entity);
     threeJsWrapper.update();
