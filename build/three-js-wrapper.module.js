@@ -59964,7 +59964,7 @@ class ThreeJSWrapper {
 
   //static THREE instance
   static get THREE() {
-    return THREE;
+    return WrappedThree;
   }
 
   //add an entity to the scene

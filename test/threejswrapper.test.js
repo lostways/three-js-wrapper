@@ -1,7 +1,5 @@
 import ThreeJSWrapper from "../build/three-js-wrapper.module.js";
 import TestEntity from "./entities/TestEntity.js";
-import * as sinon from "sinon";
-import { assert } from "chai";
 
 let testCanvas;
 let threeJsWrapper;

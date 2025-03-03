@@ -1,6 +1,4 @@
 import TestEntity from "./entities/TestEntity.js";
-import { assert } from "chai";
-import * as sinon from "sinon";
 
 before(() => {});
 
